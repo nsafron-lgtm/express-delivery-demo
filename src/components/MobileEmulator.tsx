@@ -1359,39 +1359,53 @@ export function MobileEmulator({ className }: { className?: string }) {
                 <p className="text-[10px] text-blue-700 font-semibold">Warehouse — Depart</p>
               </div>
 
-              {activeRun.stops.map(stop => (
-                <div
-                  key={stop.orderId}
-                  className={cn(
-                    'flex items-center gap-2 py-1.5 px-2 rounded border',
-                    stop.status === 'completed'
-                      ? 'border-green-200 bg-green-50'
-                      : 'border-gray-200 bg-white'
-                  )}
-                >
-                  <div className={cn(
-                    'w-5 h-5 rounded-full flex items-center justify-center shrink-0',
-                    stop.status === 'completed' ? 'bg-green-500' : 'bg-[hsl(0,72%,51%)]'
-                  )}>
-                    <span className="text-[8px] text-white font-bold">{stop.stopNumber}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className={cn(
-                      'text-[10px] font-semibold truncate',
-                      stop.status === 'completed' ? 'text-green-700 line-through' : 'text-gray-800'
-                    )}>
-                      {stop.clientName}
-                    </p>
-                    <p className="text-[9px] text-gray-400 truncate">{stop.clientAddress}</p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-[9px] text-gray-400">~{stop.estimatedArrival}</p>
-                    {stop.status === 'completed' && (
-                      <CheckCircle2 className="h-3 w-3 text-green-500 ml-auto mt-0.5" />
+              {activeRun.stops.map(stop => {
+                const stopOrder = orders.find(o => o.id === stop.orderId);
+                const done = stop.status === 'completed';
+                const deliveredAt = stop.deliveredAt ?? stopOrder?.deliveredAt;
+                return (
+                  <div
+                    key={stop.orderId}
+                    className={cn(
+                      'py-2 px-2 rounded border',
+                      done ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-white'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className={cn(
+                        'w-5 h-5 rounded-full flex items-center justify-center shrink-0',
+                        done ? 'bg-green-500' : 'bg-[hsl(0,72%,51%)]'
+                      )}>
+                        <span className="text-[8px] text-white font-bold">{stop.stopNumber}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={cn(
+                          'text-[10px] font-semibold truncate',
+                          done ? 'text-green-700' : 'text-gray-800'
+                        )}>
+                          {stop.clientName}
+                        </p>
+                        <p className="text-[9px] text-gray-400 truncate">{stop.clientAddress}</p>
+                      </div>
+                      {done && <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />}
+                    </div>
+                    {done && deliveredAt && (
+                      <p className="text-[9px] text-green-600 font-semibold mt-1 pl-7">
+                        ✓ Delivered at {new Date(deliveredAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                      </p>
+                    )}
+                    {!done && (
+                      <button
+                        onClick={() => confirmDelivery(stop.orderId)}
+                        className="mt-1.5 ml-7 w-[calc(100%-1.75rem)] flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold py-1.5 rounded-md transition-colors"
+                      >
+                        <Check className="h-3 w-3" />
+                        Confirm Delivery
+                      </button>
                     )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

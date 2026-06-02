@@ -197,9 +197,16 @@ export function DeliveryProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const confirmDelivery = useCallback((orderId: string, signature?: string, statusOverride?: OrderStatus) => {
+    const now = new Date().toISOString();
     setOrders(prev => prev.map(o =>
-      o.id === orderId ? { ...o, status: statusOverride || 'Delivered' as OrderStatus, signature } : o
+      o.id === orderId ? { ...o, status: statusOverride || 'Delivered' as OrderStatus, signature, deliveredAt: now } : o
     ));
+    setDeliveryRuns(prev => prev.map(run => ({
+      ...run,
+      stops: run.stops.map(stop =>
+        stop.orderId === orderId ? { ...stop, status: 'completed' as const, deliveredAt: now } : stop
+      ),
+    })));
   }, []);
 
   const addCustomer = useCallback((customer: Omit<Customer, 'id' | 'clientId'>) => {

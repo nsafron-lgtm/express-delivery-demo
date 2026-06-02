@@ -54,6 +54,9 @@ export interface Order {
   rejectionReason?: string;
   clientX?: number;
   clientY?: number;
+  lat?: number;
+  lng?: number;
+  deliveredAt?: string;
 }
 
 export interface Courier {
@@ -80,6 +83,7 @@ export interface RouteStop {
   clientAddress: string;
   estimatedArrival: string;
   status: 'pending' | 'completed' | 'failed';
+  deliveredAt?: string;
   x: number;
   y: number;
 }
@@ -175,7 +179,7 @@ export const sampleOrders: Order[] = [
         ],
       },
     ],
-    total: 690.00, comment: 'Call before delivery', createdAt: '2026-03-09T09:00:00Z', clientX: 25, clientY: 50,
+    total: 690.00, comment: 'Call before delivery', createdAt: '2026-03-09T09:00:00Z', clientX: 25, clientY: 50, lat: 25.2697, lng: 55.3095,
   },
   {
     // Assigned — appears in driver pickup list; 1 package
@@ -189,7 +193,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi3', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
       },
     ],
-    total: 899.00, createdAt: '2026-03-09T10:30:00Z', clientX: 52, clientY: 27,
+    total: 899.00, createdAt: '2026-03-09T10:30:00Z', clientX: 52, clientY: 27, lat: 25.0777, lng: 55.1331,
   },
   {
     id: 'o3', orderNumber: 'ORD-2026-003', clientName: 'Michael Thompson', clientPhone: '+1 555-1003',
@@ -208,7 +212,7 @@ export const sampleOrders: Order[] = [
         ],
       },
     ],
-    total: 229.98, createdAt: '2026-03-09T08:00:00Z', clientX: 73, clientY: 38,
+    total: 229.98, createdAt: '2026-03-09T08:00:00Z', clientX: 73, clientY: 38, lat: 25.1872, lng: 55.2713,
     pickedUp: true, pickedUpAt: '2026-03-09T07:46:00Z', pickupPartial: false,
   },
   {
@@ -222,7 +226,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi6', name: 'Organic Olive Oil 1L', quantity: 5, price: 12.99, barcode: '8410660123456' }],
       },
     ],
-    total: 64.95, createdAt: '2026-03-09T07:00:00Z', clientX: 82, clientY: 63,
+    total: 64.95, createdAt: '2026-03-09T07:00:00Z', clientX: 82, clientY: 63, lat: 25.1972, lng: 55.2744,
     pickedUp: true, pickedUpAt: '2026-03-09T06:51:00Z', pickupPartial: false,
     signature: 'data:signed',
   },
@@ -236,7 +240,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi7', name: 'LEGO Star Wars Set', quantity: 2, price: 79.99, barcode: '5702016912345' }],
       },
     ],
-    total: 159.98, comment: 'Customer cancelled', createdAt: '2026-03-09T06:00:00Z', clientX: 60, clientY: 77,
+    total: 159.98, comment: 'Customer cancelled', createdAt: '2026-03-09T06:00:00Z', clientX: 60, clientY: 77, lat: 25.0819, lng: 55.1331,
   },
   {
     id: 'o6', orderNumber: 'ORD-2026-006', clientName: 'Robert Brown', clientPhone: '+1 555-1001',
@@ -249,7 +253,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi8', name: 'Buckwheat groats', quantity: 10, price: 3.50, barcode: '4607011585678' }],
       },
     ],
-    total: 35.00, createdAt: '2026-03-09T07:00:00Z', clientX: 25, clientY: 50,
+    total: 35.00, createdAt: '2026-03-09T07:00:00Z', clientX: 25, clientY: 50, lat: 25.2697, lng: 55.3095,
   },
   {
     id: 'o7', orderNumber: 'ORD-2026-007', clientName: 'Emily Davis', clientPhone: '+1 555-1002',
@@ -268,7 +272,7 @@ export const sampleOrders: Order[] = [
         ],
       },
     ],
-    total: 488.97, createdAt: '2026-03-09T08:00:00Z', clientX: 52, clientY: 27,
+    total: 488.97, createdAt: '2026-03-09T08:00:00Z', clientX: 52, clientY: 27, lat: 25.0777, lng: 55.1331,
     pickedUp: true, pickedUpAt: '2026-03-09T07:56:00Z', pickupPartial: false,
   },
   {
@@ -282,7 +286,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi11', name: 'BOSCH Drill Machine', quantity: 1, price: 120.00, barcode: '4054628001234' }],
       },
     ],
-    total: 120.00, createdAt: '2026-03-09T06:00:00Z', clientX: 73, clientY: 38,
+    total: 120.00, createdAt: '2026-03-09T06:00:00Z', clientX: 73, clientY: 38, lat: 25.1872, lng: 55.2713,
     pickedUp: true, pickedUpAt: '2026-03-09T06:41:00Z', pickupPartial: false,
     signature: 'data:signed',
   },
@@ -302,7 +306,7 @@ export const sampleOrders: Order[] = [
         items: [{ id: 'oi12b', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
       },
     ],
-    total: 1798.00, createdAt: '2026-03-09T09:00:00Z', clientX: 82, clientY: 63,
+    total: 1798.00, createdAt: '2026-03-09T09:00:00Z', clientX: 82, clientY: 63, lat: 25.1972, lng: 55.2744,
   },
   {
     id: 'o10', orderNumber: 'ORD-2026-010', clientName: 'William Martinez', clientPhone: '+1 555-1005',
@@ -320,12 +324,13 @@ export const sampleOrders: Order[] = [
         ],
       },
     ],
-    total: 329.97, createdAt: '2026-03-09T10:00:00Z', clientX: 60, clientY: 77,
+    total: 329.97, createdAt: '2026-03-09T10:00:00Z', clientX: 60, clientY: 77, lat: 25.0819, lng: 55.1331,
   },
 ];
 
 // Depot position on the mock map (x, y in 0-100 coordinate space)
 export const DEPOT_POSITION = { x: 12, y: 80 };
+export const DEPOT_LATLNG: [number, number] = [25.2532, 55.3657]; // Dubai Airport Free Zone area
 
 // Per-client mock coordinates — used for map dots and clustering
 export const CLIENT_COORDS: Record<string, { x: number; y: number }> = {
