@@ -134,264 +134,224 @@ export const nextPackageBarcode = (): string => {
 };
 
 export const sampleCouriers: Courier[] = [
-  { id: 'c1', courierNumber: 'COUR-001', name: 'Alex Johnson', phone: '+1 555-0101', email: 'alex.j@delivery.com', password: 'alex2026', status: 'Active', ordersCompleted: 156, currentOrders: 3, rating: 4.8, successRate: 97, vehiclePlate: 'DXB-A-11423', vehicleModel: 'Toyota Hiace' },
-  { id: 'c2', courierNumber: 'COUR-002', name: 'Maria Garcia', phone: '+1 555-0102', email: 'maria.g@delivery.com', password: 'maria2026', status: 'On Delivery', ordersCompleted: 203, currentOrders: 5, rating: 4.9, successRate: 99, vehiclePlate: 'DXB-B-22187', vehicleModel: 'Mitsubishi Canter' },
-  { id: 'c3', courierNumber: 'COUR-003', name: 'James Wilson', phone: '+1 555-0103', email: 'james.w@delivery.com', password: 'james2026', status: 'Active', ordersCompleted: 89, currentOrders: 2, rating: 4.2, successRate: 91, vehiclePlate: 'DXB-C-33901', vehicleModel: 'Toyota Hiace' },
-  { id: 'c4', courierNumber: 'COUR-004', name: 'Sarah Chen', phone: '+1 555-0104', email: 'sarah.c@delivery.com', password: 'sarah2026', status: 'Inactive', ordersCompleted: 45, currentOrders: 0, rating: 3.8, successRate: 85, isDeactivated: true, vehiclePlate: 'DXB-D-44512', vehicleModel: 'Ford Transit' },
-  { id: 'c5', courierNumber: 'COUR-005', name: 'David Kim', phone: '+1 555-0105', email: 'david.k@delivery.com', password: 'david2026', status: 'Active', ordersCompleted: 312, currentOrders: 4, rating: 4.95, successRate: 98, vehiclePlate: 'DXB-E-55674', vehicleModel: 'Mitsubishi Canter' },
-  { id: 'c6', courierNumber: 'COUR-006', name: 'Rachel Torres', phone: '+1 555-0106', password: 'rachel2026', status: 'Active', ordersCompleted: 78, currentOrders: 2, rating: 4.5, successRate: 94, vehiclePlate: 'DXB-F-66839', vehicleModel: 'Ford Transit' },
+  { id: 'c1', courierNumber: 'COUR-001', name: 'Alex Johnson',   phone: '+971 50 111 0101', email: 'alex.j@delivery.ae',   password: 'alex2026',   status: 'Active',      ordersCompleted: 156, currentOrders: 0, rating: 4.8, successRate: 97, vehiclePlate: 'DXB-A-11423', vehicleModel: 'Toyota Hiace' },
+  { id: 'c2', courierNumber: 'COUR-002', name: 'Maria Garcia',   phone: '+971 50 111 0102', email: 'maria.g@delivery.ae',  password: 'maria2026',  status: 'On Delivery', ordersCompleted: 203, currentOrders: 2, rating: 4.9, successRate: 99, vehiclePlate: 'DXB-B-22187', vehicleModel: 'Mitsubishi Canter' },
+  { id: 'c3', courierNumber: 'COUR-003', name: 'James Wilson',   phone: '+971 50 111 0103', email: 'james.w@delivery.ae',  password: 'james2026',  status: 'Active',      ordersCompleted: 89,  currentOrders: 0, rating: 4.2, successRate: 91, vehiclePlate: 'DXB-C-33901', vehicleModel: 'Toyota Hiace' },
+  { id: 'c4', courierNumber: 'COUR-004', name: 'Sarah Chen',     phone: '+971 50 111 0104', email: 'sarah.c@delivery.ae',  password: 'sarah2026',  status: 'Inactive',    ordersCompleted: 45,  currentOrders: 0, rating: 3.8, successRate: 85, isDeactivated: true, vehiclePlate: 'DXB-D-44512', vehicleModel: 'Ford Transit' },
+  { id: 'c5', courierNumber: 'COUR-005', name: 'David Kim',      phone: '+971 50 111 0105', email: 'david.k@delivery.ae',  password: 'david2026',  status: 'Active',      ordersCompleted: 312, currentOrders: 0, rating: 4.95, successRate: 98, vehiclePlate: 'DXB-E-55674', vehicleModel: 'Mitsubishi Canter' },
+  { id: 'c6', courierNumber: 'COUR-006', name: 'Rachel Torres',  phone: '+971 50 111 0106',                                password: 'rachel2026', status: 'Active',      ordersCompleted: 78,  currentOrders: 0, rating: 4.5,  successRate: 94, vehiclePlate: 'DXB-F-66839', vehicleModel: 'Ford Transit' },
 ];
 
 export const sampleItems: InventoryItem[] = [
-  { id: 'i1', name: 'Air Conditioner Sanyo', partNumber: 'AC-SNY-001', barcode: '4901660123456', uom: 'pcs', price: 450.00 },
-  { id: 'i2', name: 'BOSCH Drill Machine', partNumber: 'BM-BSH-002', barcode: '4054628001234', uom: 'pcs', price: 120.00 },
-  { id: 'i3', name: 'Buckwheat groats', partNumber: 'FD-BWG-003', barcode: '4607011585678', uom: 'kg', price: 3.50 },
-  { id: 'i4', name: 'Samsung Galaxy S24', partNumber: 'PH-SGS-004', barcode: '8806095012345', uom: 'pcs', price: 899.00 },
-  { id: 'i5', name: 'Nike Running Shoes', partNumber: 'SH-NKR-005', barcode: '0194501234567', uom: 'pair', price: 129.99 },
-  { id: 'i6', name: 'Organic Olive Oil 1L', partNumber: 'FD-OOL-006', barcode: '8410660123456', uom: 'bottle', price: 12.99 },
-  { id: 'i7', name: 'LEGO Star Wars Set', partNumber: 'TY-LSW-007', barcode: '5702016912345', uom: 'pcs', price: 79.99 },
-  { id: 'i8', name: 'Logitech MX Master 3', partNumber: 'PC-LMM-008', barcode: '5099206012345', uom: 'pcs', price: 99.99 },
+  { id: 'i1', name: 'Air Conditioner Sanyo 18K BTU', partNumber: 'AC-SNY-001', barcode: '4901660123456', uom: 'pcs', price: 1350.00 },
+  { id: 'i2', name: 'BOSCH Cordless Drill Set',       partNumber: 'BM-BSH-002', barcode: '4054628001234', uom: 'pcs', price: 450.00 },
+  { id: 'i3', name: 'Printer Paper A4 (500 sheets)',  partNumber: 'OF-PPA-003', barcode: '4607011585678', uom: 'ream', price: 18.00 },
+  { id: 'i4', name: 'Samsung Galaxy S25',             partNumber: 'PH-SGS-004', barcode: '8806095012345', uom: 'pcs', price: 1299.00 },
+  { id: 'i5', name: 'Nike Air Max Running Shoes',     partNumber: 'SH-NKR-005', barcode: '0194501234567', uom: 'pair', price: 380.00 },
+  { id: 'i6', name: 'Nescafé Gold 200g',              partNumber: 'FD-NCG-006', barcode: '8410660123456', uom: 'jar', price: 32.50 },
+  { id: 'i7', name: 'Dyson V15 Vacuum Cleaner',       partNumber: 'HH-DYS-007', barcode: '5702016912345', uom: 'pcs', price: 2200.00 },
+  { id: 'i8', name: 'Logitech MX Master 3S Mouse',    partNumber: 'PC-LMM-008', barcode: '5099206012345', uom: 'pcs', price: 220.00 },
+  { id: 'i9', name: 'Instant Pot Duo 7-in-1',         partNumber: 'KT-IPD-009', barcode: '6931706980349', uom: 'pcs', price: 490.00 },
+  { id: 'i10', name: 'IKEA Billy Bookcase 80cm',      partNumber: 'FN-IKB-010', barcode: '7332623490012', uom: 'pcs', price: 265.00 },
 ];
 
 export const sampleCustomers: Customer[] = [
-  { id: 'cu1', name: 'Robert Brown', phone: '+1 555-1001', email: 'robert.b@email.com', address: '123 Main St, Apt 4B', city: 'New York', ordersCount: 12, totalSpent: 2450.00, clientSince: '2024-06-15', lastOrder: 'ORD-2024-008', clientId: 'CLN-20240615-1001' },
-  { id: 'cu2', name: 'Emily Davis', phone: '+1 555-1002', email: 'emily.d@email.com', address: '456 Oak Avenue, Suite 200', city: 'Los Angeles', ordersCount: 8, totalSpent: 1890.00, clientSince: '2024-07-20', lastOrder: 'ORD-2024-007', clientId: 'CLN-20240720-1002' },
-  { id: 'cu3', name: 'Michael Thompson', phone: '+1 555-1003', email: 'michael.t@email.com', address: '789 Pine Road', city: 'Chicago', ordersCount: 23, totalSpent: 5670.00, clientSince: '2024-03-10', lastOrder: 'ORD-2024-003', clientId: 'CLN-20240310-1003' },
-  { id: 'cu4', name: 'Lisa Anderson', phone: '+1 555-1004', email: 'lisa.a@email.com', address: '321 Elm Street, Floor 3', city: 'Houston', ordersCount: 5, totalSpent: 890.00, clientSince: '2024-09-01', lastOrder: 'ORD-2024-009', clientId: 'CLN-20240901-1004' },
-  { id: 'cu5', name: 'William Martinez', phone: '+1 555-1005', email: 'william.m@email.com', address: '654 Cedar Lane', city: 'Phoenix', ordersCount: 17, totalSpent: 3200.00, clientSince: '2024-04-22', lastOrder: 'ORD-2024-010', clientId: 'CLN-20240422-1005' },
+  { id: 'cu1',  name: 'Ahmed Al Rashidi',    phone: '+971 55 201 4401', email: 'ahmed.rashidi@gmail.com',   address: 'Tower A, Marina Walk',           city: 'Dubai Marina',       ordersCount: 7,  totalSpent: 8420.00, clientSince: '2024-02-10', clientId: 'CLN-20240210-0001' },
+  { id: 'cu2',  name: 'Priya Sharma',        phone: '+971 55 201 4402', email: 'priya.sharma@hotmail.com',  address: 'Unit 405, The Walk Tower 7',     city: 'JBR',                ordersCount: 4,  totalSpent: 3190.00, clientSince: '2024-05-18', clientId: 'CLN-20240518-0002' },
+  { id: 'cu3',  name: 'Carlos Rivera',       phone: '+971 55 201 4403', email: 'carlos.r@empresa.com',      address: 'Villa 14, Street 18C, Al Safa',  city: 'Jumeirah',           ordersCount: 12, totalSpent: 15600.00,clientSince: '2023-11-01', clientId: 'CLN-20231101-0003' },
+  { id: 'cu4',  name: 'Elena Petrova',       phone: '+971 55 201 4404', email: 'elena.petrova@mail.ru',     address: 'Emaar Blvd, Downtown Dubai',     city: 'Downtown',           ordersCount: 9,  totalSpent: 11250.00,clientSince: '2024-01-22', clientId: 'CLN-20240122-0004' },
+  { id: 'cu5',  name: 'Mohammed Al Farsi',   phone: '+971 55 201 4405', email: 'm.alfarsi@corp.ae',         address: 'Bay Square Bldg 3, Business Bay', city: 'Business Bay',      ordersCount: 18, totalSpent: 23800.00,clientSince: '2023-09-14', clientId: 'CLN-20230914-0005' },
+  { id: 'cu6',  name: 'Jessica Wong',        phone: '+971 55 201 4406', email: 'jessica.w@outlook.com',     address: 'Al Mankhool Road, Apt 2B',       city: 'Bur Dubai',          ordersCount: 5,  totalSpent: 4360.00, clientSince: '2024-04-03', clientId: 'CLN-20240403-0006' },
+  { id: 'cu7',  name: 'Omar Hassan',         phone: '+971 55 201 4407', email: 'omar.hassan@yahoo.com',     address: 'Al Rigga Street, Shop 12',       city: 'Deira',              ordersCount: 22, totalSpent: 19700.00,clientSince: '2023-07-30', clientId: 'CLN-20230730-0007' },
+  { id: 'cu8',  name: 'Fatima Al Zaabi',     phone: '+971 55 201 4408', email: 'fatima.alzaabi@gmail.com',  address: 'Al Qusais Industrial 2, St 8',   city: 'Al Qusais',          ordersCount: 3,  totalSpent: 2100.00, clientSince: '2024-08-11', clientId: 'CLN-20240811-0008' },
+  { id: 'cu9',  name: 'Rajesh Patel',        phone: '+971 55 201 4409', email: 'rajesh.p@techco.in',        address: 'Persia Cluster A15',             city: 'International City', ordersCount: 14, totalSpent: 9870.00, clientSince: '2024-03-05', clientId: 'CLN-20240305-0009' },
+  { id: 'cu10', name: 'Sarah Mitchell',      phone: '+971 55 201 4410', email: 's.mitchell@agency.com',     address: 'Al Barsha 1, near Mall of Emirates', city: 'Al Barsha',     ordersCount: 8,  totalSpent: 6540.00, clientSince: '2024-06-20', clientId: 'CLN-20240620-0010' },
 ];
+
+// ─── TODAY'S DATE HELPER ────────────────────────────────────────────────────
+const TODAY = '2026-06-02';
+function ts(time: string) { return `${TODAY}T${time}:00Z`; }
 
 export const sampleOrders: Order[] = [
+  // ── 10 NEW orders waiting to be assigned (spread across Dubai) ──────────
+
+  // WEST CLUSTER — Dubai Marina / JBR / Jumeirah / Al Barsha
   {
-    id: 'o1', orderNumber: 'ORD-2026-001', clientName: 'Robert Brown', clientPhone: '+1 555-1001',
-    clientAddress: '123 Main St, Apt 4B', floor: '4', status: 'New', deliveryDate: '2026-03-09',
-    deliveryTime: '10:00-12:00', paymentMethod: 'Cash',
+    id: 'n1', orderNumber: 'ORD-2026-001', clientName: 'Ahmed Al Rashidi', clientPhone: '+971 55 201 4401',
+    clientAddress: 'Tower A, Marina Walk, Dubai Marina', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '10:00-12:00', paymentMethod: 'Cash',
+    items: [{ id: 'n1i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }],
+    packages: [{ id: 'n1p1', barcode: 'P-2001', status: 'pending', items: [{ id: 'n1i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }] }],
+    total: 1350.00, createdAt: ts('06:30'), lat: 25.0794, lng: 55.1332,
+  },
+  {
+    id: 'n2', orderNumber: 'ORD-2026-002', clientName: 'Priya Sharma', clientPhone: '+971 55 201 4402',
+    clientAddress: 'Unit 405, The Walk Tower 7, JBR', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '09:00-11:00', paymentMethod: 'Card',
     items: [
-      { id: 'oi1', name: 'Air Conditioner Sanyo', quantity: 1, price: 450.00, barcode: '4901660123456' },
-      { id: 'oi2', name: 'BOSCH Drill Machine', quantity: 2, price: 120.00, barcode: '4054628001234' },
+      { id: 'n2i1', name: 'Dyson V15 Vacuum Cleaner',    quantity: 1, price: 2200.00, barcode: '5702016912345' },
+      { id: 'n2i2', name: 'Nescafé Gold 200g',           quantity: 3, price: 32.50,   barcode: '8410660123456' },
     ],
-    packages: [
-      {
-        id: 'pkg-o1-1', barcode: 'P-1001', status: 'pending',
-        items: [
-          { id: 'oi1', name: 'Air Conditioner Sanyo', quantity: 1, price: 450.00, barcode: '4901660123456' },
-          { id: 'oi2', name: 'BOSCH Drill Machine', quantity: 2, price: 120.00, barcode: '4054628001234' },
-        ],
-      },
-    ],
-    total: 690.00, comment: 'Call before delivery', createdAt: '2026-03-09T09:00:00Z', clientX: 25, clientY: 50, lat: 25.2697, lng: 55.3095,
+    packages: [{ id: 'n2p1', barcode: 'P-2002', status: 'pending', items: [{ id: 'n2i1', name: 'Dyson V15 Vacuum Cleaner', quantity: 1, price: 2200.00, barcode: '5702016912345' }, { id: 'n2i2', name: 'Nescafé Gold 200g', quantity: 3, price: 32.50, barcode: '8410660123456' }] }],
+    total: 2297.50, createdAt: ts('08:15'), lat: 25.0894, lng: 55.1410,
   },
   {
-    // Assigned — appears in driver pickup list; 1 package
-    id: 'o2', orderNumber: 'ORD-2026-002', clientName: 'Emily Davis', clientPhone: '+1 555-1002',
-    clientAddress: '456 Oak Avenue, Suite 200', status: 'Assigned', courier: 'Alex Johnson', courierId: 'c1',
-    deliveryDate: '2026-03-09', deliveryTime: '14:00-16:00', paymentMethod: 'Card',
-    items: [{ id: 'oi3', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
-    packages: [
-      {
-        id: 'pkg-o2-1', barcode: 'P-1002', status: 'pending',
-        items: [{ id: 'oi3', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
-      },
-    ],
-    total: 899.00, createdAt: '2026-03-09T10:30:00Z', clientX: 52, clientY: 27, lat: 25.0777, lng: 55.1331,
+    id: 'n3', orderNumber: 'ORD-2026-003', clientName: 'Carlos Rivera', clientPhone: '+971 55 201 4403',
+    clientAddress: 'Villa 14, Street 18C, Al Safa, Jumeirah', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '12:00-14:00', paymentMethod: 'Online',
+    items: [{ id: 'n3i1', name: 'IKEA Billy Bookcase 80cm', quantity: 2, price: 265.00, barcode: '7332623490012' }],
+    packages: [{ id: 'n3p1', barcode: 'P-2003', status: 'pending', items: [{ id: 'n3i1', name: 'IKEA Billy Bookcase 80cm', quantity: 2, price: 265.00, barcode: '7332623490012' }] }],
+    total: 530.00, comment: 'Leave at gate if no answer', createdAt: ts('09:45'), lat: 25.2028, lng: 55.2406,
   },
   {
-    id: 'o3', orderNumber: 'ORD-2026-003', clientName: 'Michael Thompson', clientPhone: '+1 555-1003',
-    clientAddress: '789 Pine Road', status: 'In Transit', courier: 'Maria Garcia', courierId: 'c2',
-    deliveryDate: '2026-03-09', deliveryTime: '09:00-11:00', paymentMethod: 'Online',
+    id: 'n4', orderNumber: 'ORD-2026-004', clientName: 'Sarah Mitchell', clientPhone: '+971 55 201 4410',
+    clientAddress: 'Al Barsha 1, near Mall of Emirates, Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '14:00-16:00', paymentMethod: 'Cash',
     items: [
-      { id: 'oi4', name: 'Nike Running Shoes', quantity: 1, price: 129.99, barcode: '0194501234567' },
-      { id: 'oi5', name: 'Logitech MX Master 3', quantity: 1, price: 99.99, barcode: '5099206012345' },
+      { id: 'n4i1', name: 'Nike Air Max Running Shoes',  quantity: 1, price: 380.00, barcode: '0194501234567' },
+      { id: 'n4i2', name: 'Logitech MX Master 3S Mouse', quantity: 1, price: 220.00, barcode: '5099206012345' },
     ],
+    packages: [{ id: 'n4p1', barcode: 'P-2004', status: 'pending', items: [{ id: 'n4i1', name: 'Nike Air Max Running Shoes', quantity: 1, price: 380.00, barcode: '0194501234567' }, { id: 'n4i2', name: 'Logitech MX Master 3S Mouse', quantity: 1, price: 220.00, barcode: '5099206012345' }] }],
+    total: 600.00, createdAt: ts('10:30'), lat: 25.1089, lng: 55.2004,
+  },
+
+  // CENTRAL CLUSTER — Downtown / Business Bay / Bur Dubai
+  {
+    id: 'n5', orderNumber: 'ORD-2026-005', clientName: 'Elena Petrova', clientPhone: '+971 55 201 4404',
+    clientAddress: 'Emaar Boulevard, Downtown Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '11:00-13:00', paymentMethod: 'Card',
+    items: [{ id: 'n5i1', name: 'Samsung Galaxy S25', quantity: 2, price: 1299.00, barcode: '8806095012345' }],
     packages: [
-      {
-        id: 'pkg-o3-1', barcode: 'P-1003', status: 'picked', pickedAt: '2026-03-09T07:45:00Z',
-        items: [
-          { id: 'oi4', name: 'Nike Running Shoes', quantity: 1, price: 129.99, barcode: '0194501234567' },
-          { id: 'oi5', name: 'Logitech MX Master 3', quantity: 1, price: 99.99, barcode: '5099206012345' },
-        ],
-      },
+      { id: 'n5p1', barcode: 'P-2005', status: 'pending', items: [{ id: 'n5i1a', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }] },
+      { id: 'n5p2', barcode: 'P-2006', status: 'pending', items: [{ id: 'n5i1b', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }] },
     ],
-    total: 229.98, createdAt: '2026-03-09T08:00:00Z', clientX: 73, clientY: 38, lat: 25.1872, lng: 55.2713,
-    pickedUp: true, pickedUpAt: '2026-03-09T07:46:00Z', pickupPartial: false,
+    total: 2598.00, createdAt: ts('11:50'), lat: 25.1972, lng: 55.2744,
   },
   {
-    id: 'o4', orderNumber: 'ORD-2026-004', clientName: 'Lisa Anderson', clientPhone: '+1 555-1004',
-    clientAddress: '321 Elm Street, Floor 3', floor: '3', status: 'Delivered', courier: 'James Wilson', courierId: 'c3',
-    deliveryDate: '2026-03-09', paymentMethod: 'Cash',
-    items: [{ id: 'oi6', name: 'Organic Olive Oil 1L', quantity: 5, price: 12.99, barcode: '8410660123456' }],
-    packages: [
-      {
-        id: 'pkg-o4-1', barcode: 'P-1004', status: 'picked', pickedAt: '2026-03-09T06:50:00Z',
-        items: [{ id: 'oi6', name: 'Organic Olive Oil 1L', quantity: 5, price: 12.99, barcode: '8410660123456' }],
-      },
-    ],
-    total: 64.95, createdAt: '2026-03-09T07:00:00Z', clientX: 82, clientY: 63, lat: 25.1972, lng: 55.2744,
-    pickedUp: true, pickedUpAt: '2026-03-09T06:51:00Z', pickupPartial: false,
-    signature: 'data:signed',
-  },
-  {
-    id: 'o5', orderNumber: 'ORD-2026-005', clientName: 'William Martinez', clientPhone: '+1 555-1005',
-    clientAddress: '654 Cedar Lane', status: 'Cancelled', deliveryDate: '2026-03-09', paymentMethod: 'Card',
-    items: [{ id: 'oi7', name: 'LEGO Star Wars Set', quantity: 2, price: 79.99, barcode: '5702016912345' }],
-    packages: [
-      {
-        id: 'pkg-o5-1', barcode: 'P-1005', status: 'pending',
-        items: [{ id: 'oi7', name: 'LEGO Star Wars Set', quantity: 2, price: 79.99, barcode: '5702016912345' }],
-      },
-    ],
-    total: 159.98, comment: 'Customer cancelled', createdAt: '2026-03-09T06:00:00Z', clientX: 60, clientY: 77, lat: 25.0819, lng: 55.1331,
-  },
-  {
-    id: 'o6', orderNumber: 'ORD-2026-006', clientName: 'Robert Brown', clientPhone: '+1 555-1001',
-    clientAddress: '123 Main St, Apt 4B', status: 'New', deliveryDate: '2026-03-09',
-    deliveryTime: '16:00-18:00', paymentMethod: 'Online',
-    items: [{ id: 'oi8', name: 'Buckwheat groats', quantity: 10, price: 3.50, barcode: '4607011585678' }],
-    packages: [
-      {
-        id: 'pkg-o6-1', barcode: 'P-1006', status: 'pending',
-        items: [{ id: 'oi8', name: 'Buckwheat groats', quantity: 10, price: 3.50, barcode: '4607011585678' }],
-      },
-    ],
-    total: 35.00, createdAt: '2026-03-09T07:00:00Z', clientX: 25, clientY: 50, lat: 25.2697, lng: 55.3095,
-  },
-  {
-    id: 'o7', orderNumber: 'ORD-2026-007', clientName: 'Emily Davis', clientPhone: '+1 555-1002',
-    clientAddress: '456 Oak Avenue, Suite 200', status: 'In Transit', courier: 'David Kim', courierId: 'c5',
-    deliveryDate: '2026-03-09', paymentMethod: 'Cash',
+    id: 'n6', orderNumber: 'ORD-2026-006', clientName: 'Mohammed Al Farsi', clientPhone: '+971 55 201 4405',
+    clientAddress: 'Bay Square Building 3, Business Bay, Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '13:00-15:00', paymentMethod: 'Online',
     items: [
-      { id: 'oi9', name: 'Air Conditioner Sanyo', quantity: 1, price: 450.00, barcode: '4901660123456' },
-      { id: 'oi10', name: 'Organic Olive Oil 1L', quantity: 3, price: 12.99, barcode: '8410660123456' },
+      { id: 'n6i1', name: 'Instant Pot Duo 7-in-1',     quantity: 1, price: 490.00, barcode: '6931706980349' },
+      { id: 'n6i2', name: 'BOSCH Cordless Drill Set',    quantity: 1, price: 450.00, barcode: '4054628001234' },
     ],
-    packages: [
-      {
-        id: 'pkg-o7-1', barcode: 'P-1007', status: 'picked', pickedAt: '2026-03-09T07:55:00Z',
-        items: [
-          { id: 'oi9', name: 'Air Conditioner Sanyo', quantity: 1, price: 450.00, barcode: '4901660123456' },
-          { id: 'oi10', name: 'Organic Olive Oil 1L', quantity: 3, price: 12.99, barcode: '8410660123456' },
-        ],
-      },
-    ],
-    total: 488.97, createdAt: '2026-03-09T08:00:00Z', clientX: 52, clientY: 27, lat: 25.0777, lng: 55.1331,
-    pickedUp: true, pickedUpAt: '2026-03-09T07:56:00Z', pickupPartial: false,
+    packages: [{ id: 'n6p1', barcode: 'P-2007', status: 'pending', items: [{ id: 'n6i1', name: 'Instant Pot Duo 7-in-1', quantity: 1, price: 490.00, barcode: '6931706980349' }, { id: 'n6i2', name: 'BOSCH Cordless Drill Set', quantity: 1, price: 450.00, barcode: '4054628001234' }] }],
+    total: 940.00, createdAt: ts('13:20'), lat: 25.1872, lng: 55.2741,
   },
   {
-    id: 'o8', orderNumber: 'ORD-2026-008', clientName: 'Michael Thompson', clientPhone: '+1 555-1003',
-    clientAddress: '789 Pine Road', status: 'Delivered', courier: 'Alex Johnson', courierId: 'c1',
-    deliveryDate: '2026-03-09', paymentMethod: 'Card',
-    items: [{ id: 'oi11', name: 'BOSCH Drill Machine', quantity: 1, price: 120.00, barcode: '4054628001234' }],
-    packages: [
-      {
-        id: 'pkg-o8-1', barcode: 'P-1008', status: 'picked', pickedAt: '2026-03-09T06:40:00Z',
-        items: [{ id: 'oi11', name: 'BOSCH Drill Machine', quantity: 1, price: 120.00, barcode: '4054628001234' }],
-      },
-    ],
-    total: 120.00, createdAt: '2026-03-09T06:00:00Z', clientX: 73, clientY: 38, lat: 25.1872, lng: 55.2713,
-    pickedUp: true, pickedUpAt: '2026-03-09T06:41:00Z', pickupPartial: false,
-    signature: 'data:signed',
+    id: 'n7', orderNumber: 'ORD-2026-007', clientName: 'Jessica Wong', clientPhone: '+971 55 201 4406',
+    clientAddress: 'Al Mankhool Road, Apt 2B, Bur Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '10:00-12:00', paymentMethod: 'Cash',
+    items: [{ id: 'n7i1', name: 'Printer Paper A4 (500 sheets)', quantity: 10, price: 18.00, barcode: '4607011585678' }],
+    packages: [{ id: 'n7p1', barcode: 'P-2008', status: 'pending', items: [{ id: 'n7i1', name: 'Printer Paper A4 (500 sheets)', quantity: 10, price: 18.00, barcode: '4607011585678' }] }],
+    total: 180.00, createdAt: ts('07:50'), lat: 25.2532, lng: 55.2894,
+  },
+
+  // EAST CLUSTER — Deira / Al Qusais / International City
+  {
+    id: 'n8', orderNumber: 'ORD-2026-008', clientName: 'Omar Hassan', clientPhone: '+971 55 201 4407',
+    clientAddress: 'Al Rigga Street, Shop 12, Deira, Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '15:00-17:00', paymentMethod: 'Card',
+    items: [{ id: 'n8i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }],
+    packages: [{ id: 'n8p1', barcode: 'P-2009', status: 'pending', items: [{ id: 'n8i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }] }],
+    total: 1350.00, createdAt: ts('14:30'), lat: 25.2697, lng: 55.3120,
   },
   {
-    // Assigned — appears in driver pickup list; 2 packages (good multi-package demo)
-    id: 'o9', orderNumber: 'ORD-2026-009', clientName: 'Lisa Anderson', clientPhone: '+1 555-1004',
-    clientAddress: '321 Elm Street, Floor 3', status: 'Assigned', courier: 'Maria Garcia', courierId: 'c2',
-    deliveryDate: '2026-03-09', deliveryTime: '11:00-13:00', paymentMethod: 'Online',
-    items: [{ id: 'oi12', name: 'Samsung Galaxy S24', quantity: 2, price: 899.00, barcode: '8806095012345' }],
-    packages: [
-      {
-        id: 'pkg-o9-1', barcode: 'P-1009', status: 'pending',
-        items: [{ id: 'oi12a', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
-      },
-      {
-        id: 'pkg-o9-2', barcode: 'P-1010', status: 'pending',
-        items: [{ id: 'oi12b', name: 'Samsung Galaxy S24', quantity: 1, price: 899.00, barcode: '8806095012345' }],
-      },
-    ],
-    total: 1798.00, createdAt: '2026-03-09T09:00:00Z', clientX: 82, clientY: 63, lat: 25.1972, lng: 55.2744,
-  },
-  {
-    id: 'o10', orderNumber: 'ORD-2026-010', clientName: 'William Martinez', clientPhone: '+1 555-1005',
-    clientAddress: '654 Cedar Lane', status: 'New', deliveryDate: '2026-03-09', paymentMethod: 'Cash',
+    id: 'n9', orderNumber: 'ORD-2026-009', clientName: 'Fatima Al Zaabi', clientPhone: '+971 55 201 4408',
+    clientAddress: 'Al Qusais Industrial Area 2, Street 8, Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '14:00-16:00', paymentMethod: 'Online',
     items: [
-      { id: 'oi13', name: 'Logitech MX Master 3', quantity: 2, price: 99.99, barcode: '5099206012345' },
-      { id: 'oi14', name: 'Nike Running Shoes', quantity: 1, price: 129.99, barcode: '0194501234567' },
+      { id: 'n9i1', name: 'IKEA Billy Bookcase 80cm',   quantity: 3, price: 265.00, barcode: '7332623490012' },
+      { id: 'n9i2', name: 'Nescafé Gold 200g',          quantity: 6, price: 32.50,  barcode: '8410660123456' },
     ],
-    packages: [
-      {
-        id: 'pkg-o10-1', barcode: 'P-1011', status: 'pending',
-        items: [
-          { id: 'oi13', name: 'Logitech MX Master 3', quantity: 2, price: 99.99, barcode: '5099206012345' },
-          { id: 'oi14', name: 'Nike Running Shoes', quantity: 1, price: 129.99, barcode: '0194501234567' },
-        ],
-      },
+    packages: [{ id: 'n9p1', barcode: 'P-2010', status: 'pending', items: [{ id: 'n9i1', name: 'IKEA Billy Bookcase 80cm', quantity: 3, price: 265.00, barcode: '7332623490012' }, { id: 'n9i2', name: 'Nescafé Gold 200g', quantity: 6, price: 32.50, barcode: '8410660123456' }] }],
+    total: 990.00, createdAt: ts('15:00'), lat: 25.2736, lng: 55.3756,
+  },
+  {
+    id: 'n10', orderNumber: 'ORD-2026-010', clientName: 'Rajesh Patel', clientPhone: '+971 55 201 4409',
+    clientAddress: 'Persia Cluster A15, International City, Dubai', status: 'New',
+    deliveryDate: TODAY, deliveryTime: '16:00-18:00', paymentMethod: 'Cash',
+    items: [
+      { id: 'n10i1', name: 'Logitech MX Master 3S Mouse', quantity: 2, price: 220.00, barcode: '5099206012345' },
+      { id: 'n10i2', name: 'Printer Paper A4 (500 sheets)', quantity: 5, price: 18.00, barcode: '4607011585678' },
     ],
-    total: 329.97, createdAt: '2026-03-09T10:00:00Z', clientX: 60, clientY: 77, lat: 25.0819, lng: 55.1331,
+    packages: [{ id: 'n10p1', barcode: 'P-2011', status: 'pending', items: [{ id: 'n10i1', name: 'Logitech MX Master 3S Mouse', quantity: 2, price: 220.00, barcode: '5099206012345' }, { id: 'n10i2', name: 'Printer Paper A4 (500 sheets)', quantity: 5, price: 18.00, barcode: '4607011585678' }] }],
+    total: 530.00, comment: 'Call on arrival', createdAt: ts('16:15'), lat: 25.1652, lng: 55.4113,
+  },
+
+  // ── ACTIVE runs (for mobile emulator demo) ────────────────────────────────
+  {
+    id: 'a1', orderNumber: 'ORD-2026-011', clientName: 'Carlos Rivera', clientPhone: '+971 55 201 4403',
+    clientAddress: 'Villa 8, Street 12B, Jumeirah 3, Dubai', status: 'In Transit',
+    courier: 'Maria Garcia', courierId: 'c2',
+    deliveryDate: TODAY, deliveryTime: '09:00-11:00', paymentMethod: 'Cash',
+    items: [{ id: 'a1i1', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }],
+    packages: [{ id: 'a1p1', barcode: 'P-2012', status: 'picked', pickedAt: ts('07:55'), items: [{ id: 'a1i1', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }] }],
+    total: 1299.00, createdAt: ts('07:00'), lat: 25.2028, lng: 55.2406,
+    pickedUp: true, pickedUpAt: ts('07:56'), pickupPartial: false,
+  },
+  {
+    id: 'a2', orderNumber: 'ORD-2026-012', clientName: 'Elena Petrova', clientPhone: '+971 55 201 4404',
+    clientAddress: 'Address Residences, Downtown Dubai', status: 'In Transit',
+    courier: 'Maria Garcia', courierId: 'c2',
+    deliveryDate: TODAY, deliveryTime: '09:00-11:00', paymentMethod: 'Card',
+    items: [{ id: 'a2i1', name: 'Dyson V15 Vacuum Cleaner', quantity: 1, price: 2200.00, barcode: '5702016912345' }],
+    packages: [{ id: 'a2p1', barcode: 'P-2013', status: 'picked', pickedAt: ts('08:05'), items: [{ id: 'a2i1', name: 'Dyson V15 Vacuum Cleaner', quantity: 1, price: 2200.00, barcode: '5702016912345' }] }],
+    total: 2200.00, createdAt: ts('07:10'), lat: 25.1972, lng: 55.2744,
+    pickedUp: true, pickedUpAt: ts('08:06'), pickupPartial: false,
+  },
+
+  // ── HISTORY: Delivered & Cancelled ───────────────────────────────────────
+  {
+    id: 'h1', orderNumber: 'ORD-2026-013', clientName: 'Ahmed Al Rashidi', clientPhone: '+971 55 201 4401',
+    clientAddress: 'Tower A, Marina Walk, Dubai Marina', status: 'Delivered',
+    courier: 'Alex Johnson', courierId: 'c1',
+    deliveryDate: '2026-06-01', paymentMethod: 'Cash',
+    items: [{ id: 'h1i1', name: 'BOSCH Cordless Drill Set', quantity: 1, price: 450.00, barcode: '4054628001234' }],
+    packages: [{ id: 'h1p1', barcode: 'P-1901', status: 'picked', pickedAt: '2026-06-01T08:30:00Z', items: [{ id: 'h1i1', name: 'BOSCH Cordless Drill Set', quantity: 1, price: 450.00, barcode: '4054628001234' }] }],
+    total: 450.00, createdAt: '2026-06-01T07:00:00Z', lat: 25.0794, lng: 55.1332,
+    pickedUp: true, pickedUpAt: '2026-06-01T08:31:00Z', signature: 'data:signed',
+    deliveredAt: '2026-06-01T10:15:00Z',
+  },
+  {
+    id: 'h2', orderNumber: 'ORD-2026-014', clientName: 'Mohammed Al Farsi', clientPhone: '+971 55 201 4405',
+    clientAddress: 'Bay Square Building 3, Business Bay', status: 'Delivered',
+    courier: 'James Wilson', courierId: 'c3',
+    deliveryDate: '2026-06-01', paymentMethod: 'Online',
+    items: [{ id: 'h2i1', name: 'Instant Pot Duo 7-in-1', quantity: 1, price: 490.00, barcode: '6931706980349' }],
+    packages: [{ id: 'h2p1', barcode: 'P-1902', status: 'picked', pickedAt: '2026-06-01T09:00:00Z', items: [{ id: 'h2i1', name: 'Instant Pot Duo 7-in-1', quantity: 1, price: 490.00, barcode: '6931706980349' }] }],
+    total: 490.00, createdAt: '2026-06-01T08:00:00Z', lat: 25.1872, lng: 55.2741,
+    pickedUp: true, pickedUpAt: '2026-06-01T09:01:00Z', signature: 'data:signed',
+    deliveredAt: '2026-06-01T11:45:00Z',
+  },
+  {
+    id: 'h3', orderNumber: 'ORD-2026-015', clientName: 'Omar Hassan', clientPhone: '+971 55 201 4407',
+    clientAddress: 'Al Rigga Street, Shop 12, Deira', status: 'Cancelled',
+    deliveryDate: '2026-06-01', paymentMethod: 'Card',
+    items: [{ id: 'h3i1', name: 'Nike Air Max Running Shoes', quantity: 1, price: 380.00, barcode: '0194501234567' }],
+    packages: [{ id: 'h3p1', barcode: 'P-1903', status: 'pending', items: [{ id: 'h3i1', name: 'Nike Air Max Running Shoes', quantity: 1, price: 380.00, barcode: '0194501234567' }] }],
+    total: 380.00, comment: 'Customer requested cancellation', createdAt: '2026-06-01T10:00:00Z', lat: 25.2697, lng: 55.3120,
   },
 ];
-
-// Depot position on the mock map (x, y in 0-100 coordinate space)
-export const DEPOT_POSITION = { x: 12, y: 80 };
-export const DEPOT_LATLNG: [number, number] = [25.2532, 55.3657]; // Dubai Airport Free Zone area
-
-// Per-client mock coordinates — used for map dots and clustering
-export const CLIENT_COORDS: Record<string, { x: number; y: number }> = {
-  'Robert Brown':      { x: 25, y: 50 },
-  'Emily Davis':       { x: 52, y: 27 },
-  'Michael Thompson':  { x: 73, y: 38 },
-  'Lisa Anderson':     { x: 82, y: 63 },
-  'William Martinez':  { x: 60, y: 77 },
-};
+// Depot / warehouse — Al Garhoud area near Dubai Airport
+export const DEPOT_POSITION = { x: 55, y: 35 };
+export const DEPOT_LATLNG: [number, number] = [25.2417, 55.3512];
 
 export const sampleDeliveryRuns: DeliveryRun[] = [
   {
-    id: 'run-1',
-    runNumber: 'RUN-2026-001',
+    id: 'run-active',
+    runNumber: 'RUN-2026-A01',
     driverId: 'c2',
     driverName: 'Maria Garcia',
     vehiclePlate: 'DXB-B-22187',
     vehicleModel: 'Mitsubishi Canter',
-    date: '2026-03-09',
+    date: TODAY,
     status: 'In Progress',
-    createdAt: '2026-03-09T07:00:00Z',
-    estimatedDuration: '4h 15m',
+    createdAt: ts('07:00'),
+    estimatedDuration: '3h 30m',
     stops: [
-      { stopNumber: 1, orderId: 'o3',  clientName: 'Michael Thompson', clientAddress: '789 Pine Road',              estimatedArrival: '08:30', status: 'completed', x: 32, y: 52 },
-      { stopNumber: 2, orderId: 'o7',  clientName: 'Emily Davis',       clientAddress: '456 Oak Avenue, Suite 200', estimatedArrival: '09:15', status: 'completed', x: 52, y: 30 },
-      { stopNumber: 3, orderId: 'o9',  clientName: 'Lisa Anderson',     clientAddress: '321 Elm Street, Floor 3',   estimatedArrival: '10:20', status: 'pending',   x: 72, y: 22 },
-      { stopNumber: 4, orderId: 'o4',  clientName: 'Lisa Anderson',     clientAddress: '321 Elm Street, Floor 3',   estimatedArrival: '11:30', status: 'pending',   x: 82, y: 52 },
-    ],
-  },
-  {
-    id: 'run-2',
-    runNumber: 'RUN-2026-002',
-    driverId: 'c1',
-    driverName: 'Alex Johnson',
-    vehiclePlate: 'DXB-A-11423',
-    vehicleModel: 'Toyota Hiace',
-    date: '2026-03-09',
-    status: 'Planned',
-    createdAt: '2026-03-09T08:30:00Z',
-    estimatedDuration: '3h 45m',
-    stops: [
-      { stopNumber: 1, orderId: 'o2',  clientName: 'Emily Davis',       clientAddress: '456 Oak Avenue, Suite 200', estimatedArrival: '10:00', status: 'pending', x: 38, y: 42 },
-      { stopNumber: 2, orderId: 'o8',  clientName: 'Michael Thompson',  clientAddress: '789 Pine Road',             estimatedArrival: '11:00', status: 'pending', x: 60, y: 28 },
-      { stopNumber: 3, orderId: 'o1',  clientName: 'Robert Brown',      clientAddress: '123 Main St, Apt 4B',       estimatedArrival: '12:15', status: 'pending', x: 78, y: 48 },
-    ],
-  },
-  {
-    id: 'run-3',
-    runNumber: 'RUN-2026-003',
-    driverId: 'c5',
-    driverName: 'David Kim',
-    vehiclePlate: 'DXB-E-55674',
-    vehicleModel: 'Mitsubishi Canter',
-    date: '2026-03-09',
-    status: 'Completed',
-    createdAt: '2026-03-09T06:00:00Z',
-    estimatedDuration: '2h 50m',
-    stops: [
-      { stopNumber: 1, orderId: 'o5',  clientName: 'William Martinez',  clientAddress: '654 Cedar Lane',            estimatedArrival: '07:00', status: 'completed', x: 45, y: 60 },
-      { stopNumber: 2, orderId: 'o6',  clientName: 'Robert Brown',      clientAddress: '123 Main St, Apt 4B',       estimatedArrival: '07:55', status: 'completed', x: 65, y: 42 },
-      { stopNumber: 3, orderId: 'o10', clientName: 'William Martinez',  clientAddress: '654 Cedar Lane',            estimatedArrival: '08:50', status: 'completed', x: 78, y: 68 },
+      { stopNumber: 1, orderId: 'a1', clientName: 'Carlos Rivera',  clientAddress: 'Villa 8, Street 12B, Jumeirah 3', estimatedArrival: '09:00', status: 'completed', deliveredAt: ts('09:12'), x: 30, y: 60 },
+      { stopNumber: 2, orderId: 'a2', clientName: 'Elena Petrova',  clientAddress: 'Address Residences, Downtown',   estimatedArrival: '10:00', status: 'pending',   x: 50, y: 62 },
     ],
   },
 ];
