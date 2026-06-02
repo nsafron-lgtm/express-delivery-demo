@@ -2,7 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDelivery } from '@/contexts/DeliveryContext';
 import { Button } from '@/components/ui/button';
 import { OrderStatusBadge } from '@/components/OrderStatusBadge';
-import { ArrowLeft, Edit, Trash2, Users, Phone, Mail, MapPin, Calendar, ShoppingCart, DollarSign } from 'lucide-react';
+import {
+  ArrowLeft, Edit, Trash2, Users, Phone, Mail, MapPin, Calendar, ShoppingCart, DollarSign,
+} from 'lucide-react';
 
 export default function CustomerDetail() {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +28,7 @@ export default function CustomerDetail() {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Users className="h-6 w-6 text-muted-foreground" />
@@ -45,6 +48,7 @@ export default function CustomerDetail() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
+        {/* Client Info */}
         <div className="lg:col-span-2 rounded-lg border border-border bg-card p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -53,32 +57,70 @@ export default function CustomerDetail() {
             </div>
             <Button variant="ghost" size="icon"><Trash2 className="h-4 w-4 text-muted-foreground" /></Button>
           </div>
+
           <div className="grid md:grid-cols-2 gap-y-5 gap-x-8">
-            <div className="flex items-start gap-3"><Users className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Full Name</p><p className="text-sm font-medium text-foreground">{customer.name}</p></div></div>
-            <div className="flex items-start gap-3"><Calendar className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Client Since</p><p className="text-sm font-medium text-foreground">{customer.clientSince}</p></div></div>
-            <div className="flex items-start gap-3"><Phone className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Phone Number</p><p className="text-sm font-medium text-foreground">{customer.phone}</p></div></div>
-            <div className="flex items-start gap-3"><Calendar className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Last Order</p><p className="text-sm font-medium text-foreground">{customer.lastOrder || '—'}</p></div></div>
-            <div className="flex items-start gap-3"><Mail className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Email</p><p className="text-sm font-medium text-foreground">{customer.email}</p></div></div>
-            <div className="flex items-start gap-3"><ShoppingCart className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">Client ID</p><p className="text-sm font-medium text-foreground">{customer.clientId}</p></div></div>
-            <div className="flex items-start gap-3"><MapPin className="h-4 w-4 text-muted-foreground mt-0.5" /><div><p className="text-xs text-muted-foreground">City</p><p className="text-sm font-medium text-foreground">{customer.city}</p></div></div>
+            <div className="flex items-start gap-3">
+              <Users className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Full Name</p><p className="text-sm font-medium text-foreground">{customer.name}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Client Since</p><p className="text-sm font-medium text-foreground">{customer.clientSince}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Phone className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Phone Number</p><p className="text-sm font-medium text-foreground">{customer.phone}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Last Order</p><p className="text-sm font-medium text-foreground">{customer.lastOrder || '—'}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Mail className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Email</p><p className="text-sm font-medium text-foreground">{customer.email}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <ShoppingCart className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">Client ID</p><p className="text-sm font-medium text-foreground">{customer.clientId}</p></div>
+            </div>
+            <div className="flex items-start gap-3">
+              <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div><p className="text-xs text-muted-foreground">City</p><p className="text-sm font-medium text-foreground">{customer.city}</p></div>
+            </div>
           </div>
         </div>
+
+        {/* Order Statistics */}
         <div className="rounded-lg border border-border bg-card p-6">
           <h3 className="font-semibold text-foreground mb-4">Order Statistics</h3>
           <div className="space-y-4">
-            <div className="flex items-center justify-between"><div className="flex items-center gap-2"><ShoppingCart className="h-4 w-4 text-muted-foreground" /><span className="text-sm text-muted-foreground">Total Orders</span></div><span className="text-sm font-bold text-primary">{customerOrders.length}</span></div>
-            <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground ml-6">Total Spent</span><span className="text-sm font-medium text-foreground">${totalSpent.toFixed(2)}</span></div>
-            <div className="flex items-center justify-between"><div className="flex items-center gap-2"><DollarSign className="h-4 w-4 text-primary" /><span className="text-sm text-muted-foreground">Avg. Order Value</span></div><span className="text-sm font-medium text-foreground">${avgOrder.toFixed(2)}</span></div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2"><ShoppingCart className="h-4 w-4 text-muted-foreground" /><span className="text-sm text-muted-foreground">Total Orders</span></div>
+              <span className="text-sm font-bold text-primary">{customerOrders.length}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground ml-6">Total Spent</span>
+              <span className="text-sm font-medium text-foreground">${totalSpent.toFixed(2)}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2"><DollarSign className="h-4 w-4 text-primary" /><span className="text-sm text-muted-foreground">Avg. Order Value</span></div>
+              <span className="text-sm font-medium text-foreground">${avgOrder.toFixed(2)}</span>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Address */}
       <div className="rounded-lg border border-border bg-card p-6">
-        <div className="flex items-center gap-2 mb-3"><MapPin className="h-4 w-4 text-muted-foreground" /><h3 className="font-semibold text-foreground">Address Information</h3></div>
+        <div className="flex items-center gap-2 mb-3">
+          <MapPin className="h-4 w-4 text-muted-foreground" />
+          <h3 className="font-semibold text-foreground">Address Information</h3>
+        </div>
         <p className="text-sm text-muted-foreground">City: <span className="text-foreground">{customer.city}</span></p>
         <p className="text-sm text-muted-foreground mt-1">Address: <span className="text-foreground">{customer.address}</span></p>
       </div>
 
+      {/* Recent Orders */}
       <div className="rounded-lg border border-border bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-foreground">Recent Orders</h3>
@@ -86,7 +128,11 @@ export default function CustomerDetail() {
         </div>
         <div className="space-y-3">
           {customerOrders.slice(0, 5).map(order => (
-            <div key={order.id} className="rounded-lg border border-border bg-background p-4 cursor-pointer hover:border-primary/30 transition-colors" onClick={() => navigate(`/orders/${order.id}`)}>
+            <div
+              key={order.id}
+              className="rounded-lg border border-border bg-background p-4 cursor-pointer hover:border-primary/30 transition-colors"
+              onClick={() => navigate(`/orders/${order.id}`)}
+            >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-primary">{order.orderNumber}</span>
                 <OrderStatusBadge status={order.status} />
