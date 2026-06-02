@@ -35,13 +35,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div />
+        <div /> {/* header title is in DashboardLayout */}
         <Button onClick={() => navigate('/orders/create')} className="bg-primary hover:bg-primary/90 text-primary-foreground gap-1.5 text-sm h-9">
           <Plus className="h-4 w-4" />
           Create New
         </Button>
       </div>
 
+      {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <StatusCard title="Orders" value={stats.total} icon={ShoppingCart} variant="primary" />
         <StatusCard title="Unassigned" value={stats.unassigned} icon={AlertCircle} variant="warning" />
@@ -51,6 +52,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
+        {/* Real-time Updates */}
         <div className="lg:col-span-2 rounded-lg border border-border bg-card p-5">
           <div className="flex items-center gap-2 mb-4">
             <Activity className="h-4 w-4 text-primary" />
@@ -80,6 +82,7 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Quick Actions */}
         <div className="rounded-lg border border-border bg-card p-5">
           <h3 className="font-semibold text-foreground mb-4">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-2">

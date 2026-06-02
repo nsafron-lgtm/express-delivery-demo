@@ -1,9 +1,13 @@
 import { useDelivery } from '@/contexts/DeliveryContext';
 import { Button } from '@/components/ui/button';
-import { BarChart3, RefreshCw, ShoppingCart, CheckCircle, DollarSign, TrendingUp, Truck, Users, AlertTriangle, Clock, XCircle, ArrowRight, Send } from 'lucide-react';
+import {
+  BarChart3, RefreshCw, ShoppingCart, CheckCircle, DollarSign, TrendingUp,
+  Truck, Users, AlertTriangle, Clock, XCircle, ArrowRight, Send,
+} from 'lucide-react';
 
 export default function ReportsPage() {
   const { orders, couriers } = useDelivery();
+
   const delivered = orders.filter(o => o.status === 'Delivered');
   const totalRevenue = delivered.reduce((s, o) => s + o.total, 0);
   const completionRate = orders.length > 0 ? ((delivered.length / orders.length) * 100).toFixed(1) : '0';
@@ -25,6 +29,7 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <BarChart3 className="h-6 w-6 text-muted-foreground" />
@@ -33,8 +38,12 @@ export default function ReportsPage() {
             <p className="text-sm text-muted-foreground">Comprehensive delivery performance and business intelligence</p>
           </div>
         </div>
-        <Button variant="outline" className="border-border"><RefreshCw className="h-4 w-4 mr-2" /> Refresh</Button>
+        <Button variant="outline" className="border-border">
+          <RefreshCw className="h-4 w-4 mr-2" /> Refresh
+        </Button>
       </div>
+
+      {/* Top stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: 'Total Orders', value: orders.length, sub: 'Last 365 days', icon: ShoppingCart, color: 'text-primary' },
@@ -45,12 +54,19 @@ export default function ReportsPage() {
           <div key={stat.label} className="rounded-lg border border-border bg-card p-4">
             <p className="text-xs text-muted-foreground">{stat.label}</p>
             <div className="flex items-center gap-3 mt-1">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><stat.icon className={`h-5 w-5 ${stat.color}`} /></div>
-              <div><p className="text-2xl font-bold text-foreground">{stat.value}</p><p className="text-xs text-muted-foreground">{stat.sub}</p></div>
+              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                <p className="text-xs text-muted-foreground">{stat.sub}</p>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Second row stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: 'Couriers (Total)', value: couriers.length, sub: 'All couriers in system', icon: Users },
@@ -61,12 +77,19 @@ export default function ReportsPage() {
           <div key={stat.label} className="rounded-lg border border-border bg-card p-4">
             <p className="text-xs text-muted-foreground">{stat.label}</p>
             <div className="flex items-center gap-3 mt-1">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><stat.icon className="h-5 w-5 text-primary" /></div>
-              <div><p className="text-2xl font-bold text-foreground">{stat.value}</p><p className="text-xs text-muted-foreground">{stat.sub}</p></div>
+              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                <stat.icon className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                <p className="text-xs text-muted-foreground">{stat.sub}</p>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Mini stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { icon: Clock, value: pending, label: 'Pending' },
@@ -81,11 +104,15 @@ export default function ReportsPage() {
           </div>
         ))}
       </div>
+
+      {/* Available Reports */}
       <h3 className="text-lg font-semibold text-foreground">Available Reports</h3>
       <div className="grid md:grid-cols-2 gap-4">
         {reports.map(report => (
           <div key={report.title} className="rounded-lg border border-border bg-card p-5 flex items-center gap-4 cursor-pointer hover:border-primary/30 transition-colors">
-            <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><report.icon className="h-6 w-6 text-primary" /></div>
+            <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <report.icon className="h-6 w-6 text-primary" />
+            </div>
             <div className="flex-1 min-w-0">
               <h4 className="font-semibold text-foreground">{report.title}</h4>
               <p className="text-sm text-muted-foreground">{report.desc}</p>

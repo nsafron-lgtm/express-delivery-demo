@@ -29,6 +29,7 @@ export default function AssignOrders() {
     <div className="space-y-6">
       <h2 className="text-xl font-semibold text-foreground">Assign Orders</h2>
 
+      {/* Criteria */}
       <div className="rounded-lg border border-border bg-card p-5 space-y-4">
         <h3 className="font-medium text-foreground">Assignment Criteria</h3>
         <div className="grid md:grid-cols-3 gap-4">
@@ -47,6 +48,7 @@ export default function AssignOrders() {
         </div>
       </div>
 
+      {/* Assign bar */}
       <div className="flex items-center gap-3">
         <Select value={selectedCourier} onValueChange={setSelectedCourier}>
           <SelectTrigger className="w-52 bg-card border-border"><SelectValue placeholder="Select courier..." /></SelectTrigger>

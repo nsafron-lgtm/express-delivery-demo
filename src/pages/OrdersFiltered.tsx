@@ -6,6 +6,8 @@ import type { OrderStatus } from '@/data/sampleData';
 export default function OrdersFiltered({ status }: { status: OrderStatus }) {
   const { orders } = useDelivery();
 
+  // "New Orders" tab shows both New (unassigned) and Assigned (not yet picked up)
+  // "Delivered" tab shows Delivered, Partially Delivered, and Rejected
   const filtered = status === 'New'
     ? orders.filter(o => o.status === 'New' || o.status === 'Assigned')
     : status === 'Delivered'

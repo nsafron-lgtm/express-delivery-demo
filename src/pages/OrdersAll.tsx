@@ -19,6 +19,7 @@ export default function OrdersAll() {
   const [courierFilter, setCourierFilter] = useState<string>('all');
 
   const deactivatedCouriers = couriers.filter(c => c.isDeactivated);
+
   const overdueOrders = orders.filter(o => isOverdue(o));
   const unassignedOrders = orders.filter(o => o.status === 'New');
 
@@ -64,6 +65,7 @@ export default function OrdersAll() {
         </Button>
       </div>
 
+      {/* Status cards */}
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {Object.entries(statusCounts).map(([status, count]) => (
           <StatusCard
@@ -78,6 +80,7 @@ export default function OrdersAll() {
         ))}
       </div>
 
+      {/* Overdue warning */}
       {overdueOrders.length > 0 && (
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
           <Clock className="h-4 w-4 shrink-0" />
@@ -85,6 +88,7 @@ export default function OrdersAll() {
         </div>
       )}
 
+      {/* Deactivated couriers warning */}
       {deactivatedCouriers.length > 0 && (
         <div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 p-3 text-sm text-warning">
           <AlertTriangle className="h-4 w-4 shrink-0" />
@@ -92,9 +96,12 @@ export default function OrdersAll() {
         </div>
       )}
 
+      {/* Filters */}
       <div className="flex gap-3">
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-44 bg-card border-border"><SelectValue placeholder="Status" /></SelectTrigger>
+          <SelectTrigger className="w-44 bg-card border-border">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Statuses</SelectItem>
             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -105,7 +112,9 @@ export default function OrdersAll() {
           </SelectContent>
         </Select>
         <Select value={courierFilter} onValueChange={setCourierFilter}>
-          <SelectTrigger className="w-40 bg-card border-border"><SelectValue placeholder="Courier" /></SelectTrigger>
+          <SelectTrigger className="w-40 bg-card border-border">
+            <SelectValue placeholder="Courier" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Couriers</SelectItem>
             {couriers.map(c => (
