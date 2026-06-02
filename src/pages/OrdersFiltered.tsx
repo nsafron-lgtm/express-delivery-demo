@@ -8,20 +8,17 @@ import { Button } from '@/components/ui/button';
 import { Clock, AlertCircle, Route } from 'lucide-react';
 
 // ── Cutoff logic ─────────────────────────────────────────────────────────────
-type CutoffLabel = 'Same Day' | 'Check Cutoff' | 'Next Day';
+// User spec: orders received before noon → same day delivery; afternoon → next day
+type CutoffLabel = 'Same Day' | 'Next Day';
 
 function getCutoff(order: Order): CutoffLabel {
-  // Dubai is UTC+4; cutoff is 11 AM and 2 PM local time
   const hDubai = (new Date(order.createdAt).getUTCHours() + 4) % 24;
-  if (hDubai < 11) return 'Same Day';
-  if (hDubai < 14) return 'Check Cutoff';
-  return 'Next Day';
+  return hDubai < 12 ? 'Same Day' : 'Next Day';
 }
 
 const CUTOFF_STYLE: Record<CutoffLabel, { bg: string; text: string; border: string }> = {
-  'Same Day':    { bg: 'bg-green-50',  text: 'text-green-700',  border: 'border-green-200' },
-  'Check Cutoff':{ bg: 'bg-amber-50',  text: 'text-amber-700',  border: 'border-amber-200' },
-  'Next Day':    { bg: 'bg-blue-50',   text: 'text-blue-700',   border: 'border-blue-200'  },
+  'Same Day': { bg: 'bg-green-50',  text: 'text-green-700',  border: 'border-green-200' },
+  'Next Day': { bg: 'bg-blue-50',   text: 'text-blue-700',   border: 'border-blue-200'  },
 };
 
 export default function OrdersFiltered({ status }: { status: OrderStatus }) {
@@ -38,9 +35,8 @@ export default function OrdersFiltered({ status }: { status: OrderStatus }) {
     if (status !== 'New') return null;
     const newOnly = filtered.filter(o => o.status === 'New');
     return {
-      sameDay:     newOnly.filter(o => getCutoff(o) === 'Same Day'),
-      checkCutoff: newOnly.filter(o => getCutoff(o) === 'Check Cutoff'),
-      nextDay:     newOnly.filter(o => getCutoff(o) === 'Next Day'),
+      sameDay: newOnly.filter(o => getCutoff(o) === 'Same Day'),
+      nextDay: newOnly.filter(o => getCutoff(o) === 'Next Day'),
     };
   }, [filtered, status]);
 
@@ -63,11 +59,10 @@ export default function OrdersFiltered({ status }: { status: OrderStatus }) {
 
       {/* Cutoff summary banner — New Orders only */}
       {cutoffGroups && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           {([
-            { label: 'Same Day' as CutoffLabel,    icon: '✅', orders: cutoffGroups.sameDay,    desc: 'Created before 11:00 AM' },
-            { label: 'Check Cutoff' as CutoffLabel, icon: '⏳', orders: cutoffGroups.checkCutoff, desc: 'Created 11:00 AM – 2:00 PM' },
-            { label: 'Next Day' as CutoffLabel,     icon: '📅', orders: cutoffGroups.nextDay,     desc: 'Created after 2:00 PM' },
+            { label: 'Same Day' as CutoffLabel, icon: '✅', orders: cutoffGroups.sameDay, desc: 'Received before noon — deliver today' },
+            { label: 'Next Day' as CutoffLabel,  icon: '📅', orders: cutoffGroups.nextDay, desc: 'Received afternoon — deliver tomorrow' },
           ] as const).map(({ label, icon, orders: g, desc }) => {
             const s = CUTOFF_STYLE[label];
             return (

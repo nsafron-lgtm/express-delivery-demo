@@ -23,9 +23,11 @@ jobs:
         with:
           node-version: '18'
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Build
         run: npm run build
+      - name: Copy index.html as 404.html for SPA routing
+        run: cp dist/index.html dist/404.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

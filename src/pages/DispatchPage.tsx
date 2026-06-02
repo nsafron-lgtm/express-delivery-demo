@@ -1,6 +1,4 @@
 import { useState, useMemo } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Popup, Polyline } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import { useDelivery } from '@/contexts/DeliveryContext';
 import { DEPOT_LATLNG, type Order } from '@/data/sampleData';
 import { Button } from '@/components/ui/button';
@@ -12,13 +10,26 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// ── Truck colour palette ─────────────────────────────────────────────────────
 const TRUCK_COLORS = ['#3b82f6', '#f97316', '#22c55e', '#a855f7', '#ec4899', '#14b8a6'];
 const UNASSIGNED_COLOR = '#94a3b8';
 const DELIVERED_COLOR = '#22c55e';
 const DEPOT_COLOR = '#ef4444';
 
-// ── k-means clustering (using lat/lng) ──────────────────────────────────────
+// Map bounds for Dubai area (lat/lng to pixel conversion)
+const MAP_BOUNDS = {
+  north: 25.32,
+  south: 25.05,
+  west: 55.10,
+  east: 55.45,
+};
+
+function latLngToPercent(lat: number, lng: number): { x: number; y: number } {
+  const x = ((lng - MAP_BOUNDS.west) / (MAP_BOUNDS.east - MAP_BOUNDS.west)) * 100;
+  const y = ((MAP_BOUNDS.north - lat) / (MAP_BOUNDS.north - MAP_BOUNDS.south)) * 100;
+  return { x: Math.max(2, Math.min(98, x)), y: Math.max(2, Math.min(98, y)) };
+}
+
+// Simple k-means clustering
 function kmeans(orders: Order[], k: number): Order[][] {
   if (orders.length === 0) return [];
   k = Math.min(k, orders.length);
@@ -63,23 +74,17 @@ function formatTime(iso: string) {
 export default function DispatchPage() {
   const { orders, couriers, deliveryRuns, createDeliveryRun, confirmDelivery } = useDelivery();
 
-  // Which orders are pending assignment today
   const pendingOrders = useMemo(() =>
     orders.filter(o => o.status === 'New' || o.status === 'Assigned'),
     [orders]
   );
   const newOrders = useMemo(() => orders.filter(o => o.status === 'New'), [orders]);
 
-  // Smart suggestions (cluster new orders into groups)
   const k = Math.max(2, Math.min(3, Math.ceil(newOrders.length / 4)));
   const suggestions = useMemo(() => kmeans(newOrders, k), [newOrders, k]);
 
-  // Assignment state: orderId → runId
-  const [assignedTo, setAssignedTo] = useState<Record<string, string>>({});
-  // Pending group assignments
   const [groupDriver, setGroupDriver] = useState<Record<number, string>>({});
 
-  // Build run assignment colours
   const runColorMap = useMemo(() => {
     const map: Record<string, string> = {};
     deliveryRuns.forEach((r, i) => { map[r.id] = TRUCK_COLORS[i % TRUCK_COLORS.length]; });
@@ -91,6 +96,12 @@ export default function DispatchPage() {
     if (order.courierId) {
       const run = deliveryRuns.find(r => r.driverId === order.courierId);
       if (run) return runColorMap[run.id] ?? UNASSIGNED_COLOR;
+    }
+    // Check which suggestion group this order belongs to
+    for (let gi = 0; gi < suggestions.length; gi++) {
+      if (suggestions[gi].some(o => o.id === order.id)) {
+        return TRUCK_COLORS[gi % TRUCK_COLORS.length];
+      }
     }
     return UNASSIGNED_COLOR;
   }
@@ -122,17 +133,14 @@ export default function DispatchPage() {
 
   const activeDrivers = couriers.filter(c => !c.isDeactivated);
 
-  // Map centre: average of all orders with coordinates
-  const mapOrders = orders.filter(o => o.lat && o.lng);
-  const mapCenter: [number, number] = mapOrders.length
-    ? [
-        mapOrders.reduce((s, o) => s + (o.lat ?? 0), 0) / mapOrders.length,
-        mapOrders.reduce((s, o) => s + (o.lng ?? 0), 0) / mapOrders.length,
-      ]
-    : DEPOT_LATLNG;
+  // Depot position on map
+  const depotPos = latLngToPercent(DEPOT_LATLNG[0], DEPOT_LATLNG[1]);
+
+  // OpenStreetMap embed URL centered on Dubai
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${MAP_BOUNDS.west}%2C${MAP_BOUNDS.south}%2C${MAP_BOUNDS.east}%2C${MAP_BOUNDS.north}&layer=mapnik`;
 
   return (
-    <div className="flex flex-col bg-background" style={{ minHeight: 'calc(100vh - 100px)' }}>
+    <div className="flex flex-col bg-background -m-6" style={{ minHeight: 'calc(100vh - 56px)' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3 border-b bg-white">
         <div>
@@ -149,9 +157,9 @@ export default function DispatchPage() {
       </div>
 
       {/* Main body */}
-      <div className="flex" style={{ height: 'calc(100vh - 165px)' }}>
+      <div className="flex" style={{ height: 'calc(100vh - 120px)', minHeight: 500 }}>
         {/* LEFT: Smart groupings + pending list */}
-        <div className="w-72 shrink-0 border-r bg-white flex flex-col" style={{ height: '100%', overflowY: 'auto' }}>
+        <div className="w-64 shrink-0 border-r bg-white flex flex-col" style={{ height: '100%', overflowY: 'auto' }}>
           <div className="p-3 space-y-3">
 
             {/* Smart suggestions */}
@@ -165,6 +173,7 @@ export default function DispatchPage() {
                   const color = TRUCK_COLORS[gi % TRUCK_COLORS.length];
                   const label = String.fromCharCode(65 + gi);
                   const clients = [...new Set(group.map(o => o.clientName))];
+                  const estTime = `${Math.round(group.length * 0.75 * 10) / 10}h`;
                   return (
                     <div key={gi} className="rounded-lg border p-3 mb-2 bg-white" style={{ borderLeftColor: color, borderLeftWidth: 3 }}>
                       <div className="flex items-center justify-between mb-2">
@@ -176,8 +185,11 @@ export default function DispatchPage() {
                         </div>
                         <Badge variant="secondary" className="text-[10px] py-0">{group.length} stops</Badge>
                       </div>
-                      <p className="text-[11px] text-muted-foreground mb-2 truncate">
+                      <p className="text-[11px] text-muted-foreground mb-1 truncate">
                         {clients.slice(0, 2).join(', ')}{clients.length > 2 ? ` +${clients.length - 2}` : ''}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground mb-2">
+                        <Clock className="h-3 w-3 inline mr-0.5" />Est. {estTime} · {group.length} stops
                       </p>
                       <div className="flex items-center gap-2">
                         <Select value={groupDriver[gi] ?? ''} onValueChange={v => setGroupDriver(p => ({ ...p, [gi]: v }))}>
@@ -214,16 +226,21 @@ export default function DispatchPage() {
             {newOrders.length > 0 && (
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground mb-1.5">Unassigned Orders</p>
-                {newOrders.map(o => (
-                  <div key={o.id} className="flex items-start gap-2 py-1.5 border-b last:border-0">
-                    <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: UNASSIGNED_COLOR }} />
-                    <div className="min-w-0">
-                      <p className="text-xs font-medium truncate">{o.clientName}</p>
-                      <p className="text-[10px] text-muted-foreground truncate">{o.clientAddress}</p>
-                      <p className="text-[10px] text-muted-foreground">{o.orderNumber} · AED {o.total.toFixed(0)}</p>
+                {newOrders.map((o, idx) => {
+                  const color = getOrderColor(o);
+                  return (
+                    <div key={o.id} className="flex items-start gap-2 py-1.5 border-b last:border-0">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white mt-0.5 shrink-0" style={{ background: color }}>
+                        {idx + 1}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-medium truncate">{o.clientName}</p>
+                        <p className="text-[10px] text-muted-foreground truncate">{o.clientAddress}</p>
+                        <p className="text-[10px] text-muted-foreground">{o.orderNumber} · AED {o.total.toFixed(0)}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
@@ -239,112 +256,124 @@ export default function DispatchPage() {
         {/* RIGHT: Map + Active Runs */}
         <div className="flex-1 flex flex-col">
 
-          {/* Leaflet Map */}
-          <div style={{ height: 'calc(100vh - 380px)', minHeight: 320 }}>
-            <MapContainer
-              center={mapCenter}
-              zoom={11}
-              style={{ height: '100%', width: '100%' }}
-              scrollWheelZoom={true}
+          {/* Map with overlay dots */}
+          <div className="flex-1 relative" style={{ minHeight: 300 }}>
+            <iframe
+              src={mapUrl}
+              style={{ width: '100%', height: '100%', border: 0 }}
+              allowFullScreen
+              loading="eager"
+              title="Dubai delivery map"
+            />
+            {/* SVG overlay with order dots */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              style={{ zIndex: 10 }}
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
             >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              {/* Depot */}
+              <circle
+                cx={depotPos.x}
+                cy={depotPos.y}
+                r="1.2"
+                fill={DEPOT_COLOR}
+                stroke="white"
+                strokeWidth="0.3"
               />
+              <text x={depotPos.x} y={depotPos.y - 1.8} textAnchor="middle" fontSize="1.5" fill={DEPOT_COLOR} fontWeight="bold">
+                DEPOT
+              </text>
 
-              {/* Depot marker */}
-              <CircleMarker
-                center={DEPOT_LATLNG}
-                radius={10}
-                pathOptions={{ color: DEPOT_COLOR, fillColor: DEPOT_COLOR, fillOpacity: 1, weight: 2 }}
-              >
-                <Popup>
-                  <strong>🏭 Depot / Warehouse</strong><br />
-                  Starting point for all runs
-                </Popup>
-              </CircleMarker>
-
-              {/* Order markers */}
-              {orders.filter(o => o.lat && o.lng).map(order => {
-                const color = getOrderColor(order);
-                const delivered = order.status === 'Delivered';
-                const run = deliveryRuns.find(r => r.stops.some(s => s.orderId === order.id));
-                const stop = run?.stops.find(s => s.orderId === order.id);
-                return (
-                  <CircleMarker
-                    key={order.id}
-                    center={[order.lat!, order.lng!]}
-                    radius={delivered ? 9 : 11}
-                    pathOptions={{
-                      color: 'white',
-                      fillColor: color,
-                      fillOpacity: delivered ? 0.6 : 0.9,
-                      weight: 2,
-                    }}
-                  >
-                    <Popup>
-                      <div style={{ minWidth: 160 }}>
-                        <div style={{ fontWeight: 600, marginBottom: 4 }}>{order.clientName}</div>
-                        <div style={{ fontSize: 11, color: '#666', marginBottom: 2 }}>{order.clientAddress}</div>
-                        <div style={{ fontSize: 11, marginBottom: 4 }}>
-                          {order.orderNumber} · AED {order.total.toFixed(0)}
-                        </div>
-                        {run && (
-                          <div style={{ fontSize: 11 }}>
-                            <span style={{ color: color, fontWeight: 600 }}>{run.runNumber}</span>
-                            {' · '}{run.driverName}
-                          </div>
-                        )}
-                        {delivered && order.deliveredAt && (
-                          <div style={{ fontSize: 11, color: '#22c55e', marginTop: 4 }}>
-                            ✓ Delivered at {formatTime(order.deliveredAt)}
-                          </div>
-                        )}
-                        {!delivered && stop?.status === 'pending' && (
-                          <div style={{ marginTop: 6 }}>
-                            <button
-                              onClick={() => confirmDelivery(order.id)}
-                              style={{ fontSize: 11, padding: '2px 8px', background: '#22c55e', color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer' }}
-                            >
-                              Mark Delivered
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </Popup>
-                  </CircleMarker>
-                );
-              })}
-
-              {/* Route lines per run */}
+              {/* Route lines for active runs */}
               {deliveryRuns.map((run, ri) => {
                 const color = runColorMap[run.id] ?? TRUCK_COLORS[ri % TRUCK_COLORS.length];
-                const pts: [number, number][] = [DEPOT_LATLNG];
+                const points: string[] = [];
+                const dp = latLngToPercent(DEPOT_LATLNG[0], DEPOT_LATLNG[1]);
+                points.push(`${dp.x},${dp.y}`);
                 run.stops.forEach(stop => {
                   const order = orders.find(o => o.id === stop.orderId);
-                  if (order?.lat && order?.lng) pts.push([order.lat, order.lng]);
+                  if (order?.lat && order?.lng) {
+                    const p = latLngToPercent(order.lat, order.lng);
+                    points.push(`${p.x},${p.y}`);
+                  }
                 });
-                pts.push(DEPOT_LATLNG);
+                points.push(`${dp.x},${dp.y}`);
                 return (
-                  <Polyline
+                  <polyline
                     key={run.id}
-                    positions={pts}
-                    pathOptions={{ color, weight: 2, opacity: 0.5, dashArray: '6 4' }}
+                    points={points.join(' ')}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="0.3"
+                    strokeDasharray="1 0.5"
+                    opacity={0.7}
                   />
                 );
               })}
-            </MapContainer>
+
+              {/* Order dots */}
+              {orders.filter(o => o.lat && o.lng).map((order, idx) => {
+                const pos = latLngToPercent(order.lat!, order.lng!);
+                const color = getOrderColor(order);
+                const delivered = order.status === 'Delivered';
+                const num = newOrders.findIndex(o => o.id === order.id) + 1;
+                return (
+                  <g key={order.id}>
+                    <circle
+                      cx={pos.x}
+                      cy={pos.y}
+                      r={delivered ? "0.9" : "1.3"}
+                      fill={color}
+                      stroke="white"
+                      strokeWidth="0.25"
+                      opacity={delivered ? 0.6 : 0.9}
+                    />
+                    {num > 0 && (
+                      <text
+                        x={pos.x}
+                        y={pos.y + 0.5}
+                        textAnchor="middle"
+                        fontSize="1.2"
+                        fill="white"
+                        fontWeight="bold"
+                      >
+                        {num}
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Legend */}
+            <div className="absolute bottom-2 left-2 bg-white/90 border rounded-lg px-3 py-2 text-[10px] space-y-1" style={{ zIndex: 20 }}>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-full" style={{ background: DEPOT_COLOR }} />
+                <span>Warehouse / Depot</span>
+              </div>
+              {suggestions.map((_, gi) => (
+                <div key={gi} className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full" style={{ background: TRUCK_COLORS[gi % TRUCK_COLORS.length] }} />
+                  <span>Group {String.fromCharCode(65 + gi)}</span>
+                </div>
+              ))}
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-full" style={{ background: UNASSIGNED_COLOR }} />
+                <span>Unassigned</span>
+              </div>
+            </div>
           </div>
 
           {/* Active Runs panel */}
-          <div className="h-52 border-t bg-white overflow-hidden flex flex-col">
+          <div className="h-48 border-t bg-white overflow-hidden flex flex-col shrink-0">
             <div className="px-4 py-2 border-b flex items-center justify-between shrink-0">
               <span className="text-xs font-semibold uppercase tracking-wide">Active Runs</span>
               <span className="text-[11px] text-muted-foreground">
                 {deliveryRuns.filter(r => r.status !== 'Completed').length} in progress
               </span>
             </div>
-            <div className="flex gap-3 px-3 py-2 overflow-x-auto overflow-y-hidden">
+            <div className="flex gap-3 px-3 py-2 overflow-x-auto overflow-y-hidden flex-1">
               {deliveryRuns.length === 0 && (
                 <div className="flex-1 flex items-center justify-center text-xs text-muted-foreground">
                   No runs created yet — assign a group above to create a run
@@ -368,7 +397,7 @@ export default function DispatchPage() {
                         {run.status}
                       </span>
                     </div>
-                    <div className="px-2.5 py-1 overflow-y-auto" style={{ maxHeight: 120 }}>
+                    <div className="px-2.5 py-1 overflow-y-auto" style={{ maxHeight: 100 }}>
                       {run.stops.map(stop => {
                         const order = orders.find(o => o.id === stop.orderId);
                         const done = stop.status === 'completed';
