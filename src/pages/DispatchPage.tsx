@@ -132,9 +132,9 @@ export default function DispatchPage() {
     : DEPOT_LATLNG;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden bg-background">
+    <div className="flex flex-col bg-background" style={{ minHeight: 'calc(100vh - 100px)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b bg-white shrink-0">
+      <div className="flex items-center justify-between px-5 py-3 border-b bg-white">
         <div>
           <h1 className="text-lg font-semibold">Routes & Dispatch</h1>
           <p className="text-xs text-muted-foreground">
@@ -149,10 +149,10 @@ export default function DispatchPage() {
       </div>
 
       {/* Main body */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex" style={{ height: 'calc(100vh - 165px)' }}>
         {/* LEFT: Smart groupings + pending list */}
-        <div className="w-72 shrink-0 border-r bg-white flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-3 space-y-3">
+        <div className="w-72 shrink-0 border-r bg-white flex flex-col" style={{ height: '100%', overflowY: 'auto' }}>
+          <div className="p-3 space-y-3">
 
             {/* Smart suggestions */}
             {newOrders.length > 0 && (
@@ -237,10 +237,10 @@ export default function DispatchPage() {
         </div>
 
         {/* RIGHT: Map + Active Runs */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col">
 
           {/* Leaflet Map */}
-          <div className="flex-1 min-h-0">
+          <div style={{ height: 'calc(100vh - 380px)', minHeight: 320 }}>
             <MapContainer
               center={mapCenter}
               zoom={11}

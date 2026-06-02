@@ -182,7 +182,7 @@ export const sampleOrders: Order[] = [
     deliveryDate: TODAY, deliveryTime: '10:00-12:00', paymentMethod: 'Cash',
     items: [{ id: 'n1i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }],
     packages: [{ id: 'n1p1', barcode: 'P-2001', status: 'pending', items: [{ id: 'n1i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }] }],
-    total: 1350.00, createdAt: ts('06:30'), lat: 25.0794, lng: 55.1332,
+    total: 1350.00, createdAt: ts('05:30'), lat: 25.0794, lng: 55.1332,
   },
   {
     id: 'n2', orderNumber: 'ORD-2026-002', clientName: 'Priya Sharma', clientPhone: '+971 55 201 4402',
@@ -193,7 +193,7 @@ export const sampleOrders: Order[] = [
       { id: 'n2i2', name: 'Nescafé Gold 200g',           quantity: 3, price: 32.50,   barcode: '8410660123456' },
     ],
     packages: [{ id: 'n2p1', barcode: 'P-2002', status: 'pending', items: [{ id: 'n2i1', name: 'Dyson V15 Vacuum Cleaner', quantity: 1, price: 2200.00, barcode: '5702016912345' }, { id: 'n2i2', name: 'Nescafé Gold 200g', quantity: 3, price: 32.50, barcode: '8410660123456' }] }],
-    total: 2297.50, createdAt: ts('08:15'), lat: 25.0894, lng: 55.1410,
+    total: 2297.50, createdAt: ts('05:55'), lat: 25.0894, lng: 55.1410,
   },
   {
     id: 'n3', orderNumber: 'ORD-2026-003', clientName: 'Carlos Rivera', clientPhone: '+971 55 201 4403',
@@ -201,7 +201,7 @@ export const sampleOrders: Order[] = [
     deliveryDate: TODAY, deliveryTime: '12:00-14:00', paymentMethod: 'Online',
     items: [{ id: 'n3i1', name: 'IKEA Billy Bookcase 80cm', quantity: 2, price: 265.00, barcode: '7332623490012' }],
     packages: [{ id: 'n3p1', barcode: 'P-2003', status: 'pending', items: [{ id: 'n3i1', name: 'IKEA Billy Bookcase 80cm', quantity: 2, price: 265.00, barcode: '7332623490012' }] }],
-    total: 530.00, comment: 'Leave at gate if no answer', createdAt: ts('09:45'), lat: 25.2028, lng: 55.2406,
+    total: 530.00, comment: 'Leave at gate if no answer', createdAt: ts('06:20'), lat: 25.2028, lng: 55.2406,
   },
   {
     id: 'n4', orderNumber: 'ORD-2026-004', clientName: 'Sarah Mitchell', clientPhone: '+971 55 201 4410',
@@ -212,7 +212,7 @@ export const sampleOrders: Order[] = [
       { id: 'n4i2', name: 'Logitech MX Master 3S Mouse', quantity: 1, price: 220.00, barcode: '5099206012345' },
     ],
     packages: [{ id: 'n4p1', barcode: 'P-2004', status: 'pending', items: [{ id: 'n4i1', name: 'Nike Air Max Running Shoes', quantity: 1, price: 380.00, barcode: '0194501234567' }, { id: 'n4i2', name: 'Logitech MX Master 3S Mouse', quantity: 1, price: 220.00, barcode: '5099206012345' }] }],
-    total: 600.00, createdAt: ts('10:30'), lat: 25.1089, lng: 55.2004,
+    total: 600.00, createdAt: ts('06:45'), lat: 25.1089, lng: 55.2004,
   },
 
   // CENTRAL CLUSTER — Downtown / Business Bay / Bur Dubai
@@ -225,7 +225,7 @@ export const sampleOrders: Order[] = [
       { id: 'n5p1', barcode: 'P-2005', status: 'pending', items: [{ id: 'n5i1a', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }] },
       { id: 'n5p2', barcode: 'P-2006', status: 'pending', items: [{ id: 'n5i1b', name: 'Samsung Galaxy S25', quantity: 1, price: 1299.00, barcode: '8806095012345' }] },
     ],
-    total: 2598.00, createdAt: ts('11:50'), lat: 25.1972, lng: 55.2744,
+    total: 2598.00, createdAt: ts('07:30'), lat: 25.1972, lng: 55.2744,
   },
   {
     id: 'n6', orderNumber: 'ORD-2026-006', clientName: 'Mohammed Al Farsi', clientPhone: '+971 55 201 4405',
@@ -236,7 +236,7 @@ export const sampleOrders: Order[] = [
       { id: 'n6i2', name: 'BOSCH Cordless Drill Set',    quantity: 1, price: 450.00, barcode: '4054628001234' },
     ],
     packages: [{ id: 'n6p1', barcode: 'P-2007', status: 'pending', items: [{ id: 'n6i1', name: 'Instant Pot Duo 7-in-1', quantity: 1, price: 490.00, barcode: '6931706980349' }, { id: 'n6i2', name: 'BOSCH Cordless Drill Set', quantity: 1, price: 450.00, barcode: '4054628001234' }] }],
-    total: 940.00, createdAt: ts('13:20'), lat: 25.1872, lng: 55.2741,
+    total: 940.00, createdAt: ts('08:15'), lat: 25.1872, lng: 55.2741,
   },
   {
     id: 'n7', orderNumber: 'ORD-2026-007', clientName: 'Jessica Wong', clientPhone: '+971 55 201 4406',
@@ -244,7 +244,7 @@ export const sampleOrders: Order[] = [
     deliveryDate: TODAY, deliveryTime: '10:00-12:00', paymentMethod: 'Cash',
     items: [{ id: 'n7i1', name: 'Printer Paper A4 (500 sheets)', quantity: 10, price: 18.00, barcode: '4607011585678' }],
     packages: [{ id: 'n7p1', barcode: 'P-2008', status: 'pending', items: [{ id: 'n7i1', name: 'Printer Paper A4 (500 sheets)', quantity: 10, price: 18.00, barcode: '4607011585678' }] }],
-    total: 180.00, createdAt: ts('07:50'), lat: 25.2532, lng: 55.2894,
+    total: 180.00, createdAt: ts('06:10'), lat: 25.2532, lng: 55.2894,
   },
 
   // EAST CLUSTER — Deira / Al Qusais / International City
@@ -254,7 +254,7 @@ export const sampleOrders: Order[] = [
     deliveryDate: TODAY, deliveryTime: '15:00-17:00', paymentMethod: 'Card',
     items: [{ id: 'n8i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }],
     packages: [{ id: 'n8p1', barcode: 'P-2009', status: 'pending', items: [{ id: 'n8i1', name: 'Air Conditioner Sanyo 18K BTU', quantity: 1, price: 1350.00, barcode: '4901660123456' }] }],
-    total: 1350.00, createdAt: ts('14:30'), lat: 25.2697, lng: 55.3120,
+    total: 1350.00, createdAt: ts('10:45'), lat: 25.2697, lng: 55.3120,
   },
   {
     id: 'n9', orderNumber: 'ORD-2026-009', clientName: 'Fatima Al Zaabi', clientPhone: '+971 55 201 4408',
@@ -265,7 +265,7 @@ export const sampleOrders: Order[] = [
       { id: 'n9i2', name: 'Nescafé Gold 200g',          quantity: 6, price: 32.50,  barcode: '8410660123456' },
     ],
     packages: [{ id: 'n9p1', barcode: 'P-2010', status: 'pending', items: [{ id: 'n9i1', name: 'IKEA Billy Bookcase 80cm', quantity: 3, price: 265.00, barcode: '7332623490012' }, { id: 'n9i2', name: 'Nescafé Gold 200g', quantity: 6, price: 32.50, barcode: '8410660123456' }] }],
-    total: 990.00, createdAt: ts('15:00'), lat: 25.2736, lng: 55.3756,
+    total: 990.00, createdAt: ts('11:10'), lat: 25.2736, lng: 55.3756,
   },
   {
     id: 'n10', orderNumber: 'ORD-2026-010', clientName: 'Rajesh Patel', clientPhone: '+971 55 201 4409',
@@ -276,7 +276,7 @@ export const sampleOrders: Order[] = [
       { id: 'n10i2', name: 'Printer Paper A4 (500 sheets)', quantity: 5, price: 18.00, barcode: '4607011585678' },
     ],
     packages: [{ id: 'n10p1', barcode: 'P-2011', status: 'pending', items: [{ id: 'n10i1', name: 'Logitech MX Master 3S Mouse', quantity: 2, price: 220.00, barcode: '5099206012345' }, { id: 'n10i2', name: 'Printer Paper A4 (500 sheets)', quantity: 5, price: 18.00, barcode: '4607011585678' }] }],
-    total: 530.00, comment: 'Call on arrival', createdAt: ts('16:15'), lat: 25.1652, lng: 55.4113,
+    total: 530.00, comment: 'Call on arrival', createdAt: ts('11:45'), lat: 25.1652, lng: 55.4113,
   },
 
   // ── ACTIVE runs (for mobile emulator demo) ────────────────────────────────

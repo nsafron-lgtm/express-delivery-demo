@@ -11,9 +11,10 @@ import { Clock, AlertCircle, Route } from 'lucide-react';
 type CutoffLabel = 'Same Day' | 'Check Cutoff' | 'Next Day';
 
 function getCutoff(order: Order): CutoffLabel {
-  const h = new Date(order.createdAt).getUTCHours();
-  if (h < 11) return 'Same Day';
-  if (h < 14) return 'Check Cutoff';
+  // Dubai is UTC+4; cutoff is 11 AM and 2 PM local time
+  const hDubai = (new Date(order.createdAt).getUTCHours() + 4) % 24;
+  if (hDubai < 11) return 'Same Day';
+  if (hDubai < 14) return 'Check Cutoff';
   return 'Next Day';
 }
 

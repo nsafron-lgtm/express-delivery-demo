@@ -18,7 +18,7 @@ export function isOverdue(order: { status: string; deliveryDate: string }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const delivery = new Date(order.deliveryDate + 'T00:00:00');
-  return delivery <= today;
+  return delivery < today;
 }
 
 export function getDisplayStatus(order: { status: OrderStatus; deliveryDate: string; courierId?: string }): string {
