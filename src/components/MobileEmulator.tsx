@@ -1459,6 +1459,8 @@ export function MobileEmulator({ className }: { className?: string }) {
   };
 
   // ─── LOGIN ───
+  const activeCouriers = couriers.filter(c => !c.isDeactivated);
+
   const renderLogin = () => (
     <div className="flex flex-col h-full bg-white">
       {/* Header */}
@@ -1470,43 +1472,74 @@ export function MobileEmulator({ className }: { className?: string }) {
         <p className="text-[10px] opacity-80">Driver Login</p>
       </div>
 
-      <div className="flex-1 p-4 space-y-3">
-        {/* Username */}
+      <div className="flex-1 p-4 space-y-3 overflow-y-auto">
+        {/* Driver picker */}
         <div className="space-y-1">
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide">Driver ID</p>
-          <input
-            type="text"
-            value={loginUsername}
-            onChange={e => { setLoginUsername(e.target.value); setLoginError(''); }}
-            onKeyDown={e => e.key === 'Enter' && handleLogin()}
-            placeholder="e.g. COUR-001 or Alex Johnson"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-700 outline-none focus:border-[hsl(0,72%,51%)] focus:ring-1 focus:ring-[hsl(0,72%,51%)/30]"
-          />
-        </div>
-
-        {/* Password */}
-        <div className="space-y-1">
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide">Password</p>
-          <div className="relative">
-            <input
-              type={showLoginPassword ? 'text' : 'password'}
-              value={loginPassword}
-              onChange={e => { setLoginPassword(e.target.value); setLoginError(''); }}
-              onKeyDown={e => e.key === 'Enter' && handleLogin()}
-              placeholder="Enter your password"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-700 outline-none focus:border-[hsl(0,72%,51%)] pr-9"
-            />
-            <button
-              type="button"
-              onClick={() => setShowLoginPassword(p => !p)}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              {showLoginPassword
-                ? <EyeOff className="h-3.5 w-3.5" />
-                : <Eye className="h-3.5 w-3.5" />}
-            </button>
+          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide">Select Driver</p>
+          <div className="grid gap-1.5">
+            {activeCouriers.map(c => {
+              const selected = loginUsername === c.courierNumber;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => {
+                    setLoginUsername(c.courierNumber);
+                    setLoginPassword(c.password ?? '');
+                    setLoginError('');
+                  }}
+                  className={cn(
+                    'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border-2 transition-all text-left',
+                    selected
+                      ? 'border-[hsl(0,72%,51%)] bg-[hsl(0,72%,51%)]/5'
+                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                  )}
+                >
+                  <div className={cn(
+                    'w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold',
+                    selected ? 'bg-[hsl(0,72%,51%)] text-white' : 'bg-gray-100 text-gray-500'
+                  )}>
+                    {c.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={cn('text-[11px] font-semibold truncate', selected ? 'text-[hsl(0,72%,51%)]' : 'text-gray-800')}>
+                      {c.name}
+                    </p>
+                    <p className="text-[9px] text-gray-400 font-mono">{c.courierNumber} · {c.vehicleModel}</p>
+                  </div>
+                  {selected && (
+                    <div className="w-4 h-4 rounded-full bg-[hsl(0,72%,51%)] flex items-center justify-center shrink-0">
+                      <Check className="h-2.5 w-2.5 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
+
+        {/* Password — auto-filled, still editable */}
+        {loginUsername && (
+          <div className="space-y-1">
+            <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide">Password</p>
+            <div className="relative">
+              <input
+                type={showLoginPassword ? 'text' : 'password'}
+                value={loginPassword}
+                onChange={e => { setLoginPassword(e.target.value); setLoginError(''); }}
+                onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-700 outline-none focus:border-[hsl(0,72%,51%)] pr-9 bg-green-50 border-green-300"
+              />
+              <button
+                type="button"
+                onClick={() => setShowLoginPassword(p => !p)}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showLoginPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+              </button>
+            </div>
+            <p className="text-[9px] text-green-600">✓ Password auto-filled</p>
+          </div>
+        )}
 
         {/* Error */}
         {loginError && (
@@ -1520,29 +1553,18 @@ export function MobileEmulator({ className }: { className?: string }) {
         <button
           onClick={handleLogin}
           disabled={!loginUsername.trim() || !loginPassword.trim()}
-          className="w-full rounded-lg bg-[hsl(0,72%,51%)] text-white font-bold text-sm py-2.5 disabled:opacity-40 hover:opacity-90 transition-opacity mt-1"
+          className="w-full rounded-lg bg-[hsl(0,72%,51%)] text-white font-bold text-sm py-2.5 disabled:opacity-40 hover:opacity-90 transition-opacity"
         >
-          Log In
+          Log In as {loginUsername ? activeCouriers.find(c => c.courierNumber === loginUsername)?.name?.split(' ')[0] ?? 'Driver' : 'Driver'}
         </button>
 
-        {/* Demo hint */}
-        <div className="border border-dashed border-gray-200 rounded-lg p-3 space-y-1.5 mt-2">
-          <p className="text-[9px] text-gray-400 font-semibold uppercase tracking-wide text-center">Demo Credentials</p>
-          {[
-            { id: 'COUR-001', name: 'Alex Johnson', pwd: 'alex2026' },
-            { id: 'COUR-002', name: 'Maria Garcia', pwd: 'maria2026' },
-            { id: 'COUR-003', name: 'James Wilson', pwd: 'james2026' },
-          ].map(c => (
-            <button
-              key={c.id}
-              onClick={() => { setLoginUsername(c.id); setLoginPassword(c.pwd); setLoginError(''); }}
-              className="w-full text-left px-2 py-1.5 rounded border border-gray-100 hover:bg-gray-50 transition-colors"
-            >
-              <p className="text-[10px] font-semibold text-gray-700">{c.id} — {c.name}</p>
-              <p className="text-[9px] text-gray-400 font-mono">{c.pwd}</p>
-            </button>
-          ))}
+        {/* Info note */}
+        <div className="border border-dashed border-gray-200 rounded-lg p-3 mt-1">
+          <p className="text-[9px] text-gray-400 text-center leading-relaxed">
+            Each driver sees only their own assigned deliveries — select a driver above to see their personal view
+          </p>
         </div>
+
       </div>
     </div>
   );
