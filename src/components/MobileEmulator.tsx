@@ -7,7 +7,6 @@ import {
   Camera, RotateCcw, Map, Navigation, Eye, EyeOff, LogOut,
 } from 'lucide-react';
 import type { Order } from '@/data/sampleData';
-import { DEPOT_POSITION } from '@/data/sampleData';
 
 type MobileScreen =
   | 'home' | 'pickup-list' | 'pickup-detail'
@@ -16,7 +15,7 @@ type MobileScreen =
   | 'inventory' | 'inventory-detail' | 'settings';
 
 export function MobileEmulator({ className }: { className?: string }) {
-  const { orders, couriers, items, confirmPickup, confirmDelivery, updateOrder, deliveryRuns } = useDelivery();
+  const { orders, couriers, customers, items, confirmPickup, confirmDelivery, updateOrder, deliveryRuns } = useDelivery();
 
   // ── Auth state ──
   const [loggedInCourierId, setLoggedInCourierId] = useState<string | null>(null);
@@ -1257,7 +1256,6 @@ export function MobileEmulator({ className }: { className?: string }) {
 
   // ─── MY ROUTE ───
   const renderMyRoute = () => {
-    // Show the run assigned to the logged-in driver, falling back to first available
     const activeRun = (loggedInCourierId
       ? deliveryRuns.find(r => r.driverId === loggedInCourierId && r.status !== 'Completed')
         ?? deliveryRuns.find(r => r.driverId === loggedInCourierId)
@@ -1266,9 +1264,14 @@ export function MobileEmulator({ className }: { className?: string }) {
         ?? deliveryRuns[0]
     ) ?? null;
 
-    const depot = DEPOT_POSITION;
-    const toX = (x: number) => (x / 100) * 240;
-    const toY = (y: number) => (y / 100) * 160;
+    const getMapsLink = (address: string, clientName: string) => {
+      const customer = customers.find(c => c.name === clientName);
+      if (customer?.mapsLink) return customer.mapsLink;
+      return `https://maps.google.com/?q=${encodeURIComponent(address + ', Dubai, UAE')}`;
+    };
+
+    const completedCount = activeRun?.stops.filter(s => s.status === 'completed').length ?? 0;
+    const totalStops = activeRun?.stops.length ?? 0;
 
     return (
       <div className="flex flex-col h-full bg-white">
@@ -1298,106 +1301,78 @@ export function MobileEmulator({ className }: { className?: string }) {
               </span>
             </div>
 
-            {/* Mini map */}
-            <div className="px-3 pt-3 pb-2">
-              <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide mb-1.5">Route Map</p>
-              <svg viewBox="0 0 240 160" className="w-full rounded-lg border border-gray-200"
-                style={{ background: 'hsl(220 14% 97%)' }}>
-                {/* Grid */}
-                {[0.25, 0.5, 0.75].map(f => (
-                  <g key={f}>
-                    <line x1={toX(f * 100)} y1={0} x2={toX(f * 100)} y2={160}
-                      stroke="hsl(220 14% 90%)" strokeWidth="0.5" strokeDasharray="3 3" />
-                    <line x1={0} y1={toY(f * 100)} x2={240} y2={toY(f * 100)}
-                      stroke="hsl(220 14% 90%)" strokeWidth="0.5" strokeDasharray="3 3" />
-                  </g>
+            {/* Progress summary */}
+            <div className="px-3 py-2 border-b border-gray-100">
+              <div className="flex items-center justify-between text-[10px] font-bold text-gray-600 mb-1">
+                <span>{completedCount} of {totalStops} delivered</span>
+                <span className="text-gray-400">Est. {activeRun.estimatedDuration}</span>
+              </div>
+              <div className="flex gap-0.5 h-1.5 rounded-full overflow-hidden bg-gray-200">
+                {activeRun.stops.map(stop => (
+                  <div
+                    key={stop.orderId}
+                    className={cn('flex-1 transition-colors', stop.status === 'completed' ? 'bg-green-500' : 'bg-gray-200')}
+                  />
                 ))}
-
-                {/* Route line */}
-                {activeRun.stops.length > 0 && (() => {
-                  const pts = [depot, ...activeRun.stops.map(s => ({ x: s.x, y: s.y }))];
-                  const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${toX(p.x)} ${toY(p.y)}`).join(' ');
-                  return <path d={d} fill="none" stroke="hsl(221 83% 53%)" strokeWidth="1.5"
-                    strokeDasharray="5 3" opacity="0.7" />;
-                })()}
-
-                {/* Depot */}
-                <rect x={toX(depot.x) - 7} y={toY(depot.y) - 7} width={14} height={14}
-                  rx={2} fill="hsl(221 83% 53%)" />
-                <text x={toX(depot.x)} y={toY(depot.y) + 4} textAnchor="middle"
-                  fontSize="7" fill="white" fontWeight="bold">W</text>
-
-                {/* Stop pins */}
-                {activeRun.stops.map(stop => {
-                  const cx = toX(stop.x);
-                  const cy = toY(stop.y);
-                  const fill = stop.status === 'completed'
-                    ? 'hsl(142 71% 45%)'
-                    : 'hsl(0 72% 51%)';
-                  return (
-                    <g key={stop.orderId}>
-                      <circle cx={cx} cy={cy} r={9} fill={fill} />
-                      <text x={cx} y={cy + 3.5} textAnchor="middle"
-                        fontSize="7" fill="white" fontWeight="bold">
-                        {stop.stopNumber}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
+              </div>
             </div>
 
             {/* Stop list */}
-            <div className="px-3 pb-3 space-y-1.5">
-              <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide mb-1">Delivery Stops</p>
-
-              {/* Depot row */}
-              <div className="flex items-center gap-2 py-1.5 px-2 rounded bg-blue-50 border border-blue-100">
-                <div className="w-5 h-5 rounded bg-blue-500 flex items-center justify-center shrink-0">
-                  <span className="text-[8px] text-white font-bold">W</span>
-                </div>
-                <p className="text-[10px] text-blue-700 font-semibold">Warehouse — Depart</p>
-              </div>
+            <div className="px-3 py-3 space-y-2">
+              <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide mb-1">Delivery Order</p>
 
               {activeRun.stops.map(stop => {
                 const stopOrder = orders.find(o => o.id === stop.orderId);
                 const done = stop.status === 'completed';
                 const deliveredAt = stop.deliveredAt ?? stopOrder?.deliveredAt;
+                const mapsUrl = getMapsLink(stop.clientAddress, stop.clientName);
                 return (
                   <div
                     key={stop.orderId}
                     className={cn(
-                      'py-2 px-2 rounded border',
+                      'py-2.5 px-2.5 rounded-lg border',
                       done ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-white'
                     )}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start gap-2">
                       <div className={cn(
-                        'w-5 h-5 rounded-full flex items-center justify-center shrink-0',
+                        'w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5',
                         done ? 'bg-green-500' : 'bg-[hsl(0,72%,51%)]'
                       )}>
-                        <span className="text-[8px] text-white font-bold">{stop.stopNumber}</span>
+                        <span className="text-[9px] text-white font-bold">{stop.stopNumber}</span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className={cn(
-                          'text-[10px] font-semibold truncate',
+                          'text-[11px] font-semibold truncate',
                           done ? 'text-green-700' : 'text-gray-800'
                         )}>
                           {stop.clientName}
                         </p>
                         <p className="text-[9px] text-gray-400 truncate">{stop.clientAddress}</p>
+
+                        {/* Google Maps link */}
+                        <a
+                          href={mapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 mt-1 text-[9px] text-blue-600 font-semibold hover:text-blue-800 hover:underline"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <Navigation className="h-2.5 w-2.5" />
+                          Open in Google Maps
+                        </a>
                       </div>
-                      {done && <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />}
+                      {done && <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />}
                     </div>
                     {done && deliveredAt && (
-                      <p className="text-[9px] text-green-600 font-semibold mt-1 pl-7">
+                      <p className="text-[9px] text-green-600 font-semibold mt-1 pl-8">
                         ✓ Delivered at {new Date(deliveredAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
                       </p>
                     )}
                     {!done && (
                       <button
                         onClick={() => confirmDelivery(stop.orderId)}
-                        className="mt-1.5 ml-7 w-[calc(100%-1.75rem)] flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold py-1.5 rounded-md transition-colors"
+                        className="mt-2 ml-8 w-[calc(100%-2rem)] flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold py-1.5 rounded-md transition-colors"
                       >
                         <Check className="h-3 w-3" />
                         Confirm Delivery

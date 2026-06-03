@@ -118,6 +118,7 @@ export interface Customer {
   email: string;
   address: string;
   city: string;
+  mapsLink?: string;
   ordersCount: number;
   totalSpent: number;
   clientSince: string;
@@ -156,16 +157,16 @@ export const sampleItems: InventoryItem[] = [
 ];
 
 export const sampleCustomers: Customer[] = [
-  { id: 'cu1',  name: 'Ahmed Al Rashidi',    phone: '+971 55 201 4401', email: 'ahmed.rashidi@gmail.com',   address: 'Tower A, Marina Walk',           city: 'Dubai Marina',       ordersCount: 7,  totalSpent: 8420.00, clientSince: '2024-02-10', clientId: 'CLN-20240210-0001' },
-  { id: 'cu2',  name: 'Priya Sharma',        phone: '+971 55 201 4402', email: 'priya.sharma@hotmail.com',  address: 'Unit 405, The Walk Tower 7',     city: 'JBR',                ordersCount: 4,  totalSpent: 3190.00, clientSince: '2024-05-18', clientId: 'CLN-20240518-0002' },
-  { id: 'cu3',  name: 'Carlos Rivera',       phone: '+971 55 201 4403', email: 'carlos.r@empresa.com',      address: 'Villa 14, Street 18C, Al Safa',  city: 'Jumeirah',           ordersCount: 12, totalSpent: 15600.00,clientSince: '2023-11-01', clientId: 'CLN-20231101-0003' },
-  { id: 'cu4',  name: 'Elena Petrova',       phone: '+971 55 201 4404', email: 'elena.petrova@mail.ru',     address: 'Emaar Blvd, Downtown Dubai',     city: 'Downtown',           ordersCount: 9,  totalSpent: 11250.00,clientSince: '2024-01-22', clientId: 'CLN-20240122-0004' },
-  { id: 'cu5',  name: 'Mohammed Al Farsi',   phone: '+971 55 201 4405', email: 'm.alfarsi@corp.ae',         address: 'Bay Square Bldg 3, Business Bay', city: 'Business Bay',      ordersCount: 18, totalSpent: 23800.00,clientSince: '2023-09-14', clientId: 'CLN-20230914-0005' },
-  { id: 'cu6',  name: 'Jessica Wong',        phone: '+971 55 201 4406', email: 'jessica.w@outlook.com',     address: 'Al Mankhool Road, Apt 2B',       city: 'Bur Dubai',          ordersCount: 5,  totalSpent: 4360.00, clientSince: '2024-04-03', clientId: 'CLN-20240403-0006' },
-  { id: 'cu7',  name: 'Omar Hassan',         phone: '+971 55 201 4407', email: 'omar.hassan@yahoo.com',     address: 'Al Rigga Street, Shop 12',       city: 'Deira',              ordersCount: 22, totalSpent: 19700.00,clientSince: '2023-07-30', clientId: 'CLN-20230730-0007' },
-  { id: 'cu8',  name: 'Fatima Al Zaabi',     phone: '+971 55 201 4408', email: 'fatima.alzaabi@gmail.com',  address: 'Al Qusais Industrial 2, St 8',   city: 'Al Qusais',          ordersCount: 3,  totalSpent: 2100.00, clientSince: '2024-08-11', clientId: 'CLN-20240811-0008' },
-  { id: 'cu9',  name: 'Rajesh Patel',        phone: '+971 55 201 4409', email: 'rajesh.p@techco.in',        address: 'Persia Cluster A15',             city: 'International City', ordersCount: 14, totalSpent: 9870.00, clientSince: '2024-03-05', clientId: 'CLN-20240305-0009' },
-  { id: 'cu10', name: 'Sarah Mitchell',      phone: '+971 55 201 4410', email: 's.mitchell@agency.com',     address: 'Al Barsha 1, near Mall of Emirates', city: 'Al Barsha',     ordersCount: 8,  totalSpent: 6540.00, clientSince: '2024-06-20', clientId: 'CLN-20240620-0010' },
+  { id: 'cu1',  name: 'Ahmed Al Rashidi',    phone: '+971 55 201 4401', email: 'ahmed.rashidi@gmail.com',   address: 'Tower A, Marina Walk',           city: 'Dubai Marina',       mapsLink: 'https://maps.google.com/?q=Tower+A+Marina+Walk+Dubai+Marina', ordersCount: 7,  totalSpent: 8420.00, clientSince: '2024-02-10', clientId: 'CLN-20240210-0001' },
+  { id: 'cu2',  name: 'Priya Sharma',        phone: '+971 55 201 4402', email: 'priya.sharma@hotmail.com',  address: 'Unit 405, The Walk Tower 7',     city: 'JBR',                mapsLink: 'https://maps.google.com/?q=The+Walk+Tower+7+JBR+Dubai', ordersCount: 4,  totalSpent: 3190.00, clientSince: '2024-05-18', clientId: 'CLN-20240518-0002' },
+  { id: 'cu3',  name: 'Carlos Rivera',       phone: '+971 55 201 4403', email: 'carlos.r@empresa.com',      address: 'Villa 14, Street 18C, Al Safa',  city: 'Jumeirah',           mapsLink: 'https://maps.google.com/?q=Al+Safa+Jumeirah+Dubai', ordersCount: 12, totalSpent: 15600.00,clientSince: '2023-11-01', clientId: 'CLN-20231101-0003' },
+  { id: 'cu4',  name: 'Elena Petrova',       phone: '+971 55 201 4404', email: 'elena.petrova@mail.ru',     address: 'Emaar Blvd, Downtown Dubai',     city: 'Downtown',           mapsLink: 'https://maps.google.com/?q=Emaar+Boulevard+Downtown+Dubai', ordersCount: 9,  totalSpent: 11250.00,clientSince: '2024-01-22', clientId: 'CLN-20240122-0004' },
+  { id: 'cu5',  name: 'Mohammed Al Farsi',   phone: '+971 55 201 4405', email: 'm.alfarsi@corp.ae',         address: 'Bay Square Bldg 3, Business Bay', city: 'Business Bay',      mapsLink: 'https://maps.google.com/?q=Bay+Square+Building+3+Business+Bay+Dubai', ordersCount: 18, totalSpent: 23800.00,clientSince: '2023-09-14', clientId: 'CLN-20230914-0005' },
+  { id: 'cu6',  name: 'Jessica Wong',        phone: '+971 55 201 4406', email: 'jessica.w@outlook.com',     address: 'Al Mankhool Road, Apt 2B',       city: 'Bur Dubai',          mapsLink: 'https://maps.google.com/?q=Al+Mankhool+Road+Bur+Dubai', ordersCount: 5,  totalSpent: 4360.00, clientSince: '2024-04-03', clientId: 'CLN-20240403-0006' },
+  { id: 'cu7',  name: 'Omar Hassan',         phone: '+971 55 201 4407', email: 'omar.hassan@yahoo.com',     address: 'Al Rigga Street, Shop 12',       city: 'Deira',              mapsLink: 'https://maps.google.com/?q=Al+Rigga+Street+Deira+Dubai', ordersCount: 22, totalSpent: 19700.00,clientSince: '2023-07-30', clientId: 'CLN-20230730-0007' },
+  { id: 'cu8',  name: 'Fatima Al Zaabi',     phone: '+971 55 201 4408', email: 'fatima.alzaabi@gmail.com',  address: 'Al Qusais Industrial 2, St 8',   city: 'Al Qusais',          mapsLink: 'https://maps.google.com/?q=Al+Qusais+Industrial+Area+2+Dubai', ordersCount: 3,  totalSpent: 2100.00, clientSince: '2024-08-11', clientId: 'CLN-20240811-0008' },
+  { id: 'cu9',  name: 'Rajesh Patel',        phone: '+971 55 201 4409', email: 'rajesh.p@techco.in',        address: 'Persia Cluster A15',             city: 'International City', mapsLink: 'https://maps.google.com/?q=Persia+Cluster+International+City+Dubai', ordersCount: 14, totalSpent: 9870.00, clientSince: '2024-03-05', clientId: 'CLN-20240305-0009' },
+  { id: 'cu10', name: 'Sarah Mitchell',      phone: '+971 55 201 4410', email: 's.mitchell@agency.com',     address: 'Al Barsha 1, near Mall of Emirates', city: 'Al Barsha',     mapsLink: 'https://maps.google.com/?q=Al+Barsha+1+Mall+of+Emirates+Dubai', ordersCount: 8,  totalSpent: 6540.00, clientSince: '2024-06-20', clientId: 'CLN-20240620-0010' },
 ];
 
 // ─── TODAY'S DATE HELPER ────────────────────────────────────────────────────

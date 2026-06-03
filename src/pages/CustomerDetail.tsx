@@ -118,6 +118,17 @@ export default function CustomerDetail() {
         </div>
         <p className="text-sm text-muted-foreground">City: <span className="text-foreground">{customer.city}</span></p>
         <p className="text-sm text-muted-foreground mt-1">Address: <span className="text-foreground">{customer.address}</span></p>
+        {customer.mapsLink && (
+          <a
+            href={customer.mapsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 mt-3 text-sm text-primary font-medium hover:underline"
+          >
+            <MapPin className="h-3.5 w-3.5" />
+            Open in Google Maps
+          </a>
+        )}
       </div>
 
       {/* Recent Orders */}

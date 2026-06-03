@@ -22,6 +22,7 @@ export default function CustomersPage() {
   const [formEmail, setFormEmail] = useState('');
   const [formAddress, setFormAddress] = useState('');
   const [formCity, setFormCity] = useState('');
+  const [formMapsLink, setFormMapsLink] = useState('');
 
   const filtered = customers.filter(c =>
     c.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -38,14 +39,14 @@ export default function CustomersPage() {
 
   const openAddForm = () => {
     setEditingCustomer(null);
-    setFormName(''); setFormPhone(''); setFormEmail(''); setFormAddress(''); setFormCity('');
+    setFormName(''); setFormPhone(''); setFormEmail(''); setFormAddress(''); setFormCity(''); setFormMapsLink('');
     setShowForm(true);
   };
 
   const openEditForm = (customer: Customer) => {
     setEditingCustomer(customer);
     setFormName(customer.name); setFormPhone(customer.phone); setFormEmail(customer.email);
-    setFormAddress(customer.address); setFormCity(customer.city);
+    setFormAddress(customer.address); setFormCity(customer.city); setFormMapsLink(customer.mapsLink ?? '');
     setShowForm(true);
   };
 
@@ -53,11 +54,11 @@ export default function CustomersPage() {
     if (!formName.trim()) return;
     if (editingCustomer) {
       updateCustomer(editingCustomer.id, {
-        name: formName, phone: formPhone, email: formEmail, address: formAddress, city: formCity,
+        name: formName, phone: formPhone, email: formEmail, address: formAddress, city: formCity, mapsLink: formMapsLink || undefined,
       });
     } else {
       addCustomer({
-        name: formName, phone: formPhone, email: formEmail, address: formAddress, city: formCity,
+        name: formName, phone: formPhone, email: formEmail, address: formAddress, city: formCity, mapsLink: formMapsLink || undefined,
         ordersCount: 0, totalSpent: 0, clientSince: new Date().toISOString().slice(0, 10),
       });
     }
@@ -167,6 +168,11 @@ export default function CustomersPage() {
             <div className="space-y-2">
               <Label className="text-muted-foreground">City</Label>
               <Input value={formCity} onChange={e => setFormCity(e.target.value)} className="bg-secondary border-border" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-muted-foreground">Google Maps Link</Label>
+              <Input value={formMapsLink} onChange={e => setFormMapsLink(e.target.value)} placeholder="https://maps.google.com/?q=..." className="bg-secondary border-border" />
+              <p className="text-[10px] text-muted-foreground">Paste the Google Maps URL for this client's address. Drivers will use this link to navigate.</p>
             </div>
           </div>
           <DialogFooter>
